@@ -1,0 +1,432 @@
+<!DOCTYPE html><html lang="en" class="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Hanken+Grotesk:wght@600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">try{
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ffb4ab",
+                        "on-surface-variant": "#dcc0bb",
+                        "inverse-on-surface": "#313030",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "error-container": "#93000a",
+                        "on-primary-fixed-variant": "#7f291c",
+                        "on-background": "#e5e2e1",
+                        "tertiary-fixed": "#e5e2e1",
+                        "tertiary": "#c9c6c6",
+                        "primary-fixed": "#ffdad4",
+                        "secondary-container": "#474746",
+                        "on-surface": "#e5e2e1",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary": "#303030",
+                        "on-primary": "#601308",
+                        "tertiary-fixed-dim": "#c8c6c5",
+                        "on-secondary": "#303030",
+                        "on-error": "#690005",
+                        "secondary": "#c8c6c5",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-dim": "#131313",
+                        "outline-variant": "#56423e",
+                        "surface-container": "#201f1f",
+                        "background": "#131313",
+                        "on-primary-fixed": "#3f0300",
+                        "outline": "#a48b87",
+                        "on-tertiary-container": "#403f3f",
+                        "on-secondary-fixed": "#1b1c1c",
+                        "inverse-primary": "#9f4030",
+                        "primary-fixed-dim": "#ffb4a6",
+                        "on-primary-container": "#752215",
+                        "surface-container-high": "#2a2a2a",
+                        "tertiary-container": "#adabab",
+                        "on-secondary-container": "#b6b5b4",
+                        "surface-tint": "#ffb4a6",
+                        "secondary-fixed": "#e4e2e1",
+                        "on-tertiary-fixed-variant": "#474746",
+                        "primary-container": "#ff8a75",
+                        "primary": "#ffb4a6",
+                        "surface-variant": "#353534",
+                        "surface-container-highest": "#353534",
+                        "surface-bright": "#393939",
+                        "on-secondary-fixed-variant": "#474746",
+                        "on-tertiary-fixed": "#1b1b1c",
+                        "surface": "#131313",
+                        "inverse-surface": "#e5e2e1",
+                        "surface-container-low": "#1c1b1b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "section-gap": "48px",
+                        "container-padding": "32px",
+                        "base": "8px",
+                        "card-internal": "24px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "headline-sm": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "body-lg": ["Inter"],
+                        "metric-value": ["Hanken Grotesk"],
+                        "label-caps": ["JetBrains Mono"],
+                        "display-lg": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "headline-sm": ["18px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "metric-value": ["32px", {"lineHeight": "1", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "label-caps": ["11px", {"lineHeight": "1.2", "letterSpacing": "0.08em", "fontWeight": "500"}],
+                        "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    }catch(_e){}</script></head><body class="font-body-md text-body-md overflow-x-hidden">
+
+    <!-- Side Navigation Shell -->
+    <aside class="fixed left-0 top-0 h-full flex flex-col justify-between py-6 bg-background border-r border-outline-variant w-64 z-50">
+        <div class="px-6 flex flex-col gap-8">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-primary-container rounded flex items-center justify-center text-on-primary font-bold">D</div>
+                <div>
+                    <h1 class="font-headline-sm text-headline-sm font-bold text-on-surface leading-tight">DSA Studio AI</h1>
+                    <p class="font-label-caps text-[9px] uppercase tracking-[0.1em] text-on-surface-variant">Focused practice workspace</p>
+                </div>
+            </div>
+
+            <nav class="flex flex-col gap-1">
+                <!-- Dashboard Active -->
+                <a href="#" class="bg-secondary-container text-primary rounded-lg flex items-center gap-3 px-4 py-3 mx-2 scale-95 duration-150 ease-in-out">
+                    <span class="material-symbols-outlined text-xl">dashboard</span>
+                    <span class="font-label-caps text-label-caps">Dashboard</span>
+                </a>
+                <a href="#" class="text-on-surface-variant flex items-center gap-3 px-4 py-3 mx-2 hover:bg-surface-container transition-all duration-200">
+                    <span class="material-symbols-outlined text-xl">bolt</span>
+                    <span class="font-label-caps text-label-caps">Generate</span>
+                </a>
+                <a href="#" class="text-on-surface-variant flex items-center gap-3 px-4 py-3 mx-2 hover:bg-surface-container transition-all duration-200">
+                    <span class="material-symbols-outlined text-xl">code</span>
+                    <span class="font-label-caps text-label-caps">Workspace</span>
+                </a>
+                <a href="#" class="text-on-surface-variant flex items-center gap-3 px-4 py-3 mx-2 hover:bg-surface-container transition-all duration-200">
+                    <span class="material-symbols-outlined text-xl">history</span>
+                    <span class="font-label-caps text-label-caps">History</span>
+                </a>
+            </nav>
+        </div>
+
+        <div class="px-6">
+            <button class="w-full text-on-surface-variant flex items-center gap-3 px-4 py-3 hover:bg-surface-container transition-all duration-200 rounded-lg">
+                <span class="material-symbols-outlined text-xl">keyboard_double_arrow_left</span>
+                <span class="font-label-caps text-label-caps">Collapse Sidebar</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Canvas -->
+    <main class="ml-64 min-h-screen bg-background">
+        <!-- Top App Bar -->
+        <header class="flex justify-between items-center w-full px-container-padding py-8 max-w-full">
+            <div>
+                <h2 class="font-headline-md text-headline-md text-on-surface">Dashboard</h2>
+                <p class="text-on-surface-variant font-body-md mt-1">Track progress, spot weak topics, and get back into focused practice quickly.</p>
+            </div>
+            <button class="bg-primary-container text-on-primary-container hover:opacity-90 active:scale-[0.98] transition-all px-6 py-2.5 rounded-lg font-headline-sm text-headline-sm flex items-center gap-2">
+                <span class="material-symbols-outlined text-[20px]">add</span>
+                Generate Problem
+            </button>
+        </header>
+
+        <section class="px-container-padding pb-section-gap">
+            <!-- Metrics Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-gutter mb-section-gap">
+                <!-- Solved -->
+                <div class="bg-surface-container-low border border-outline-variant rounded-lg flex flex-col justify-between p-8 opacity-90 border-opacity-20">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Solved</span>
+                        <span class="material-symbols-outlined text-on-surface-variant text-[20px]">emoji_events</span>
+                    </div>
+                    <span class="font-metric-value text-metric-value text-on-surface">0</span>
+                </div>
+                <!-- Attempts -->
+                <div class="bg-surface-container-low border border-outline-variant rounded-lg flex flex-col justify-between p-8 opacity-90 border-opacity-20">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Attempts</span>
+                        <span class="material-symbols-outlined text-on-surface-variant text-[20px]">timeline</span>
+                    </div>
+                    <span class="font-metric-value text-metric-value text-on-surface">0</span>
+                </div>
+                <!-- Accuracy -->
+                <div class="bg-surface-container-low border border-outline-variant rounded-lg flex flex-col justify-between p-8 opacity-90 border-opacity-20">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Accuracy</span>
+                        <span class="material-symbols-outlined text-on-surface-variant text-[20px]">track_changes</span>
+                    </div>
+                    <span class="font-metric-value text-metric-value text-on-surface">0%</span>
+                </div>
+                <!-- Streak -->
+                <div class="bg-surface-container-low border border-outline-variant rounded-lg flex flex-col justify-between p-8 opacity-90 border-opacity-20">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Streak</span>
+                        <span class="material-symbols-outlined text-on-surface-variant text-[20px]">local_fire_department</span>
+                    </div>
+                    <span class="font-metric-value text-metric-value text-on-surface">0</span>
+                </div>
+                <!-- Longest -->
+                <div class="bg-surface-container-low border border-outline-variant rounded-lg flex flex-col justify-between p-8 opacity-90 border-opacity-20">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Longest</span>
+                        <span class="material-symbols-outlined text-on-surface-variant text-[20px]">leaderboard</span>
+                    </div>
+                    <span class="font-metric-value text-metric-value text-on-surface">0</span>
+                </div>
+                <!-- Avg Time -->
+                <div class="bg-surface-container-low border border-outline-variant rounded-lg flex flex-col justify-between p-8 opacity-90 border-opacity-20">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Avg Time</span>
+                        <span class="material-symbols-outlined text-on-surface-variant text-[20px]">schedule</span>
+                    </div>
+                    <span class="font-metric-value text-metric-value text-on-surface">0m</span>
+                </div>
+            </div>
+
+            <!-- Main Content Bento -->
+            <div class="grid grid-cols-12 gap-gutter">
+                
+                <!-- Topic Progress -->
+                <div class="col-span-12 lg:col-span-8 bg-surface-container-low border border-outline-variant rounded-lg p-8 border-opacity-20">
+                    <div class="flex items-center justify-between mb-8">
+                        <h3 class="font-headline-sm text-headline-sm text-on-surface">Topic Progress</h3>
+                        <span class="text-on-surface-variant font-label-caps text-label-caps">12 CATEGORIES</span>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
+                        <!-- Topic Items -->
+                        <div class="space-y-4">
+                            <div class="group">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="font-body-md text-on-surface">Arrays</span>
+                                    <span class="font-label-caps text-on-surface-variant">0/1</span>
+                                </div>
+                                <div class="bg-surface-container-high rounded-full overflow-hidden h-[2px]">
+                                    <div class="h-full bg-primary-container w-0 group-hover:w-full transition-all duration-700 ease-out"></div>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="font-body-md text-on-surface">Linked Lists</span>
+                                    <span class="font-label-caps text-on-surface-variant">0/1</span>
+                                </div>
+                                <div class="bg-surface-container-high rounded-full overflow-hidden h-[2px]">
+                                    <div class="h-full bg-primary-container w-0 group-hover:w-full transition-all duration-700 ease-out"></div>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="font-body-md text-on-surface">Graphs</span>
+                                    <span class="font-label-caps text-on-surface-variant">0/1</span>
+                                </div>
+                                <div class="bg-surface-container-high rounded-full overflow-hidden h-[2px]">
+                                    <div class="h-full bg-primary-container w-0 group-hover:w-full transition-all duration-700 ease-out"></div>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="font-body-md text-on-surface">Stack</span>
+                                    <span class="font-label-caps text-on-surface-variant">0/1</span>
+                                </div>
+                                <div class="bg-surface-container-high rounded-full overflow-hidden h-[2px]">
+                                    <div class="h-full bg-primary-container w-0 group-hover:w-full transition-all duration-700 ease-out"></div>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="font-body-md text-on-surface">Binary Search</span>
+                                    <span class="font-label-caps text-on-surface-variant">0/1</span>
+                                </div>
+                                <div class="bg-surface-container-high rounded-full overflow-hidden h-[2px]">
+                                    <div class="h-full bg-primary-container w-0 group-hover:w-full transition-all duration-700 ease-out"></div>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="font-body-md text-on-surface">Backtracking</span>
+                                    <span class="font-label-caps text-on-surface-variant">0/1</span>
+                                </div>
+                                <div class="bg-surface-container-high rounded-full overflow-hidden h-[2px]">
+                                    <div class="h-full bg-primary-container w-0 group-hover:w-full transition-all duration-700 ease-out"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="group">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="font-body-md text-on-surface">Strings</span>
+                                    <span class="font-label-caps text-on-surface-variant">0/1</span>
+                                </div>
+                                <div class="bg-surface-container-high rounded-full overflow-hidden h-[2px]">
+                                    <div class="h-full bg-primary-container w-0 group-hover:w-full transition-all duration-700 ease-out"></div>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="font-body-md text-on-surface">Trees</span>
+                                    <span class="font-label-caps text-on-surface-variant">0/1</span>
+                                </div>
+                                <div class="bg-surface-container-high rounded-full overflow-hidden h-[2px]">
+                                    <div class="h-full bg-primary-container w-0 group-hover:w-full transition-all duration-700 ease-out"></div>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="font-body-md text-on-surface">Heap</span>
+                                    <span class="font-label-caps text-on-surface-variant">0/1</span>
+                                </div>
+                                <div class="bg-surface-container-high rounded-full overflow-hidden h-[2px]">
+                                    <div class="h-full bg-primary-container w-0 group-hover:w-full transition-all duration-700 ease-out"></div>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="font-body-md text-on-surface">Queue</span>
+                                    <span class="font-label-caps text-on-surface-variant">0/1</span>
+                                </div>
+                                <div class="bg-surface-container-high rounded-full overflow-hidden h-[2px]">
+                                    <div class="h-full bg-primary-container w-0 group-hover:w-full transition-all duration-700 ease-out"></div>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="font-body-md text-on-surface">Dynamic Programming</span>
+                                    <span class="font-label-caps text-on-surface-variant">0/1</span>
+                                </div>
+                                <div class="bg-surface-container-high rounded-full overflow-hidden h-[2px]">
+                                    <div class="h-full bg-primary-container w-0 group-hover:w-full transition-all duration-700 ease-out"></div>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="font-body-md text-on-surface">Greedy</span>
+                                    <span class="font-label-caps text-on-surface-variant">0/1</span>
+                                </div>
+                                <div class="bg-surface-container-high rounded-full overflow-hidden h-[2px]">
+                                    <div class="h-full bg-primary-container w-0 group-hover:w-full transition-all duration-700 ease-out"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Difficulty Progress -->
+                <div class="col-span-12 lg:col-span-4 bg-surface-container-low border border-outline-variant rounded-lg flex flex-col p-8 border-opacity-20">
+                    <h3 class="font-headline-sm text-headline-sm text-on-surface mb-8">Difficulty Progress</h3>
+                    
+                    <div class="space-y-8 flex-grow">
+                        <div class="group">
+                            <div class="flex justify-between items-center mb-2">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-2 h-2 rounded-full bg-emerald-400"></div>
+                                    <span class="font-body-md text-on-surface">Easy</span>
+                                </div>
+                                <span class="font-label-caps text-on-surface-variant">0/1</span>
+                            </div>
+                            <div class="h-1.5 bg-surface-container-high rounded-full overflow-hidden h-[2px]">
+                                <div class="h-full bg-emerald-400/30 w-0 group-hover:w-1/4 transition-all duration-500"></div>
+                            </div>
+                        </div>
+                        <div class="group">
+                            <div class="flex justify-between items-center mb-2">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-2 h-2 rounded-full bg-amber-400"></div>
+                                    <span class="font-body-md text-on-surface">Medium</span>
+                                </div>
+                                <span class="font-label-caps text-on-surface-variant">0/1</span>
+                            </div>
+                            <div class="h-1.5 bg-surface-container-high rounded-full overflow-hidden h-[2px]">
+                                <div class="h-full bg-amber-400/30 w-0 group-hover:w-1/4 transition-all duration-500"></div>
+                            </div>
+                        </div>
+                        <div class="group">
+                            <div class="flex justify-between items-center mb-2">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-2 h-2 rounded-full bg-rose-400"></div>
+                                    <span class="font-body-md text-on-surface">Hard</span>
+                                </div>
+                                <span class="font-label-caps text-on-surface-variant">0/1</span>
+                            </div>
+                            <div class="h-1.5 bg-surface-container-high rounded-full overflow-hidden h-[2px]">
+                                <div class="h-full bg-rose-400/30 w-0 group-hover:w-1/4 transition-all duration-500"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Practice Heatmap -->
+                <div class="col-span-12 lg:col-span-8 bg-surface-container-low border border-outline-variant rounded-lg p-8 border-opacity-20">
+                    <div class="flex items-center justify-between mb-8">
+                        <h3 class="font-headline-sm text-headline-sm text-on-surface">Practice Heatmap</h3>
+                        <div class="flex items-center gap-3">
+                            <span class="text-[10px] text-on-surface-variant font-label-caps">LESS</span>
+                            <div class="flex gap-1">
+                                <div class="w-2.5 h-2.5 bg-surface-container-highest rounded-sm"></div>
+                                <div class="w-2.5 h-2.5 bg-primary-container/20 rounded-sm"></div>
+                                <div class="w-2.5 h-2.5 bg-primary-container/50 rounded-sm"></div>
+                                <div class="w-2.5 h-2.5 bg-primary-container rounded-sm"></div>
+                            </div>
+                            <span class="text-[10px] text-on-surface-variant font-label-caps">MORE</span>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-1.5 overflow-hidden">
+                        <!-- Heatmap Grid Simulation (12 weeks) -->
+                        <div class="grid grid-cols-24 gap-1.5 w-full">
+                            <script>
+                                for(let i=0; i<168; i++) {
+                                    document.write('<div class="heatmap-cell"></div>');
+                                }
+                            </script>
+                        </div>
+                    </div>
+                    <div class="flex justify-between mt-4">
+                        <span class="text-[10px] text-on-surface-variant font-label-caps">Jan</span>
+                        <span class="text-[10px] text-on-surface-variant font-label-caps">Feb</span>
+                        <span class="text-[10px] text-on-surface-variant font-label-caps">Mar</span>
+                        <span class="text-[10px] text-on-surface-variant font-label-caps">Apr</span>
+                        <span class="text-[10px] text-on-surface-variant font-label-caps">May</span>
+                        <span class="text-[10px] text-on-surface-variant font-label-caps">Jun</span>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="col-span-12 lg:col-span-4 bg-surface-container-low border border-outline-variant rounded-lg p-8 border-opacity-20">
+                    <h3 class="font-headline-sm text-headline-sm text-on-surface mb-8">Recent Activity</h3>
+                    
+                    <div class="flex flex-col items-center justify-center py-12 border-2 border-dashed border-outline-variant rounded-lg text-center opacity-50">
+                        <span class="material-symbols-outlined text-4xl mb-3">history_toggle_off</span>
+                        <p class="font-body-md text-on-surface">No submissions yet.</p>
+                        <p class="text-xs text-on-surface-variant mt-1">Start with the seeded problem or generate a fresh one.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Floating Atmosphere Elements -->
+    <div class="fixed inset-0 pointer-events-none -z-10 opacity-20 overflow-hidden">
+        <div class="absolute top-[-10%] right-[-10%] w-[40vw] h-[40vw] rounded-full bg-primary-container/10 blur-[120px]"></div>
+        <div class="absolute bottom-[-10%] left-[-10%] w-[30vw] h-[30vw] rounded-full bg-outline/5 blur-[100px]"></div>
+    </div>
+
+    <script class="">
+        // Simple Interaction logic for tabs
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                // e.preventDefault();
+                document.querySelectorAll('nav</script></body></html>
