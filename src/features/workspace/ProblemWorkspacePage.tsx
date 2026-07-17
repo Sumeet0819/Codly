@@ -57,7 +57,7 @@ function ProblemPanel({ problem, onHint, hintLoading }: { problem: Problem; onHi
   return (
     <div className="h-full overflow-y-auto px-5 py-4">
       <div className="mb-4 flex flex-wrap items-center gap-2">
-        <h1 className="mr-2 text-xl font-heading font-bold text-palette-light">{problem.title}</h1>
+        <h1 className="mr-2 text-xl font-bold text-palette-light">{problem.title}</h1>
         {problem.tags.map((tag) => (
           <span key={tag} className="rounded-full bg-palette-surface px-2.5 py-1 text-xs text-palette-muted">
             {tag}
@@ -71,17 +71,26 @@ function ProblemPanel({ problem, onHint, hintLoading }: { problem: Problem; onHi
 
       <div className="mt-6 grid gap-4">
         {problem.examples.map((example, index) => (
-          <section key={`${example.input}-${index}`} className="rounded-lg bg-palette-surfaceHover p-4 shadow-sm">
-            <h2 className="mb-3 text-sm font-heading font-semibold text-palette-light">Example {index + 1}</h2>
-            <pre className="whitespace-pre-wrap rounded-md bg-palette-dark p-3 text-xs text-palette-light">Input: {example.input}</pre>
-            <pre className="mt-2 whitespace-pre-wrap rounded-md bg-palette-dark p-3 text-xs text-palette-light">Output: {example.output}</pre>
-            {example.explanation ? <p className="mt-2 text-sm text-palette-muted">{example.explanation}</p> : null}
+          <section key={`${example.input}-${index}`} className="rounded-lg bg-palette-surfaceHover border border-palette-border p-4 shadow-sm">
+            <h2 className="mb-3 text-sm font-bold text-palette-light">Example {index + 1}:</h2>
+            <div className="text-sm text-palette-light font-mono">
+              <span className="font-bold text-palette-teal">Input: </span>{example.input}
+            </div>
+            <div className="mt-2 text-sm text-palette-light font-mono">
+              <span className="font-bold text-palette-teal">Output: </span>{example.output}
+            </div>
+            {example.explanation ? (
+              <p className="mt-3 text-sm text-palette-muted">
+                <span className="font-bold text-palette-light">Explanation: </span>
+                {example.explanation}
+              </p>
+            ) : null}
           </section>
         ))}
       </div>
 
       <section className="mt-6">
-        <h2 className="mb-3 text-sm font-heading font-semibold text-palette-light">Constraints</h2>
+        <h2 className="mb-3 text-sm font-bold text-palette-light">Constraints</h2>
         <ul className="grid gap-2 text-sm text-palette-light/90">
           {problem.constraints.map((constraint) => (
             <li key={constraint} className="rounded-lg bg-palette-surfaceHover px-3 py-2 font-mono text-xs shadow-sm">
@@ -93,7 +102,7 @@ function ProblemPanel({ problem, onHint, hintLoading }: { problem: Problem; onHi
 
       {problem.notes ? (
         <section className="mt-6">
-          <h2 className="mb-2 text-sm font-heading font-semibold text-palette-light">Notes</h2>
+          <h2 className="mb-2 text-sm font-bold text-palette-light">Notes</h2>
           <p className="text-sm text-palette-muted">{problem.notes}</p>
         </section>
       ) : null}
@@ -129,7 +138,7 @@ function ProblemPanel({ problem, onHint, hintLoading }: { problem: Problem; onHi
       ) : null}
 
       <section className="mt-6">
-        <h2 className="mb-3 text-sm font-heading font-semibold text-palette-light">Previous Attempts</h2>
+        <h2 className="mb-3 text-sm font-bold text-palette-light">Previous Attempts</h2>
         {attempts.length === 0 ? (
           <p className="text-sm text-palette-muted">No submissions for this problem yet.</p>
         ) : (
@@ -178,8 +187,8 @@ function TerminalPanel({
 
   return (
     <div className="flex h-full flex-col bg-palette-terminal">
-      <div className="flex min-h-12 items-center justify-between px-3">
-        <div className="flex gap-1">
+      <div className="flex min-h-12 items-center justify-between px-4 bg-palette-terminal border-b border-palette-terminalBorder">
+        <div className="flex gap-6">
           {(["public", "custom", "output"] as const).map((item) => (
             <button
               key={item}
@@ -187,9 +196,12 @@ function TerminalPanel({
                 setTab(item);
                 setActiveTestCaseIndex(0);
               }}
-              className={`h-8 rounded-md px-3 text-sm capitalize font-medium ${tab === item ? "bg-palette-terminalSurface text-palette-teal shadow-sm" : "text-palette-muted hover:bg-palette-terminalSurface hover:text-palette-terminalLight"}`}
+              className={`relative h-12 text-sm capitalize font-semibold transition-colors ${tab === item ? "text-palette-light" : "text-palette-muted hover:text-palette-light"}`}
             >
-              {item}
+              {item === "public" ? "Testcases" : item === "custom" ? "Custom Cases" : "Test Result"}
+              {tab === item && (
+                <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-palette-teal rounded-t-full" />
+              )}
             </button>
           ))}
         </div>
@@ -205,12 +217,12 @@ function TerminalPanel({
           <div className="grid gap-3">
             {!results ? <p className="text-sm text-palette-muted">Run code to see console output, status, runtime, and errors.</p> : (
               <>
-                <div className="flex gap-2 border-b border-palette-terminalBorder/30 pb-2 overflow-x-auto">
+                <div className="flex gap-3 pb-2 pt-1 overflow-x-auto mt-2">
                   {results.results.map((r, i) => (
                     <button
                       key={r.testCaseId}
                       onClick={() => setActiveTestCaseIndex(i)}
-                      className={`px-3 py-1.5 text-sm rounded-md whitespace-nowrap transition-colors ${activeOutputIdx === i ? 'bg-palette-terminalSurface text-palette-teal font-medium shadow-sm' : 'text-palette-muted hover:text-palette-terminalLight hover:bg-palette-terminalSurface/50'}`}
+                      className={`px-3 py-1.5 text-sm rounded-lg whitespace-nowrap transition-colors font-medium ${activeOutputIdx === i ? 'bg-palette-teal/10 text-palette-teal border border-palette-teal' : 'text-palette-muted hover:text-palette-light hover:bg-palette-terminalSurface border border-transparent'}`}
                     >
                       Case {i + 1}
                     </button>
@@ -229,16 +241,16 @@ function TerminalPanel({
                       </div>
                       <div className="grid gap-4 md:grid-cols-3">
                         <div className="grid gap-2">
-                          <span className="text-xs font-medium text-palette-terminalLight/80">Input</span>
-                          <pre className="min-h-24 w-full whitespace-pre-wrap rounded-md bg-palette-terminalSurface px-3 py-3 text-xs font-mono text-palette-terminalLight overflow-auto">{result.input}</pre>
+                          <span className="text-[11px] font-bold text-palette-muted uppercase tracking-wider">Input</span>
+                          <pre className="min-h-12 w-full rounded-md bg-[#2a2a2a] px-4 py-3 text-[13px] font-mono text-palette-terminalLight overflow-auto">{result.input}</pre>
                         </div>
                         <div className="grid gap-2">
-                          <span className="text-xs font-medium text-palette-terminalLight/80">Expected Output</span>
-                          <pre className="min-h-24 w-full whitespace-pre-wrap rounded-md bg-palette-terminalSurface px-3 py-3 text-xs font-mono text-palette-terminalLight overflow-auto">{result.expectedOutput}</pre>
+                          <span className="text-[11px] font-bold text-palette-muted uppercase tracking-wider">Expected Output</span>
+                          <pre className="min-h-12 w-full rounded-md bg-[#2a2a2a] px-4 py-3 text-[13px] font-mono text-palette-terminalLight overflow-auto">{result.expectedOutput}</pre>
                         </div>
                         <div className="grid gap-2">
-                          <span className="text-xs font-medium text-palette-terminalLight/80">Actual Output</span>
-                          <pre className="min-h-24 w-full whitespace-pre-wrap rounded-md bg-palette-terminalSurface px-3 py-3 text-xs font-mono text-palette-terminalLight overflow-auto">{result.actualOutput || result.error || "No output"}</pre>
+                          <span className="text-[11px] font-bold text-palette-muted uppercase tracking-wider">Actual Output</span>
+                          <pre className="min-h-12 w-full rounded-md bg-[#2a2a2a] px-4 py-3 text-[13px] font-mono text-palette-terminalLight overflow-auto">{result.actualOutput || result.error || "No output"}</pre>
                         </div>
                       </div>
                     </div>
@@ -253,12 +265,12 @@ function TerminalPanel({
               <p className="rounded-lg bg-palette-terminalSurface p-4 text-sm text-palette-muted">No custom test cases yet.</p>
             ) : (
               <>
-                <div className="flex gap-2 border-b border-palette-terminalBorder/30 pb-2 overflow-x-auto">
+                <div className="flex gap-3 pb-2 pt-1 overflow-x-auto mt-2">
                   {shownTests.map((t, i) => (
                     <button
                       key={t.id}
                       onClick={() => setActiveTestCaseIndex(i)}
-                      className={`px-3 py-1.5 text-sm rounded-md whitespace-nowrap transition-colors ${activeTestIdx === i ? 'bg-palette-terminalSurface text-palette-teal font-medium shadow-sm' : 'text-palette-muted hover:text-palette-terminalLight hover:bg-palette-terminalSurface/50'}`}
+                      className={`px-3 py-1.5 text-sm rounded-lg whitespace-nowrap transition-colors font-medium ${activeTestIdx === i ? 'bg-palette-teal/10 text-palette-teal border border-palette-teal' : 'text-palette-muted hover:text-palette-light hover:bg-palette-terminalSurface border border-transparent'}`}
                     >
                       Case {i + 1}
                     </button>
@@ -269,11 +281,11 @@ function TerminalPanel({
                   return (
                     <div className="mt-4">
                       <div className="mb-4 flex items-center justify-between">
-                        <span className="text-sm font-medium text-palette-terminalLight">
+                        <span className="text-sm font-semibold text-palette-light">
                           {tab === "public" ? "Read-Only Test Case" : "Custom Test Case"}
                         </span>
                         <div className="flex gap-2">
-                          <Button variant="terminal" className="min-h-8 px-3" onClick={() => onRunTest(testCase)} disabled={running} icon={<Play className="h-4 w-4" />}>
+                          <Button variant="terminal" className="min-h-8 px-3 bg-palette-terminalSurface hover:bg-palette-terminalBorder text-palette-light font-medium rounded border-none transition-colors" onClick={() => onRunTest(testCase)} disabled={running} icon={<Play className="h-4 w-4" />}>
                             Run Case
                           </Button>
                           {tab === "custom" ? (
@@ -287,31 +299,31 @@ function TerminalPanel({
                         </div>
                       </div>
                       
-                      <div className="grid gap-4 md:grid-cols-2">
+                      <div className="grid gap-4 md:grid-cols-1">
                         <div className="grid gap-2">
-                          <span className="text-xs font-medium text-palette-terminalLight/80">Input</span>
+                          <span className="text-[11px] font-bold text-palette-muted uppercase tracking-wider">Input</span>
                           {tab === "public" ? (
-                            <pre className="min-h-24 w-full rounded-md bg-palette-terminalSurface px-3 py-3 text-xs font-mono text-palette-terminalLight overflow-auto">
+                            <pre className="min-h-12 w-full rounded-md bg-[#2a2a2a] px-4 py-3 text-[13px] font-mono text-palette-terminalLight overflow-auto">
                               {testCase.input}
                             </pre>
                           ) : (
                             <textarea
-                              className="min-h-24 w-full rounded-md bg-palette-terminalSurface px-3 py-3 text-xs font-mono text-palette-terminalLight placeholder:text-palette-terminalLight/50 transition ring-1 ring-palette-terminalBorder hover:ring-palette-teal/50 focus-visible:ring-2 focus-visible:ring-palette-teal outline-none"
+                              className="min-h-12 w-full rounded-md bg-[#2a2a2a] px-4 py-3 text-[13px] font-mono text-palette-terminalLight placeholder:text-palette-terminalLight/50 transition ring-0 focus-visible:ring-1 focus-visible:ring-palette-teal outline-none resize-y"
                               value={testCase.input}
                               onChange={(event) => onUpdateCustom(testCase.id, { input: event.target.value })}
                               placeholder="Enter test case input..."
                             />
                           )}
                         </div>
-                        <div className="grid gap-2">
-                          <span className="text-xs font-medium text-palette-terminalLight/80">Expected Output</span>
+                        <div className="grid gap-2 mt-2">
+                          <span className="text-[11px] font-bold text-palette-muted uppercase tracking-wider">Expected Output</span>
                           {tab === "public" ? (
-                            <pre className="min-h-24 w-full rounded-md bg-palette-terminalSurface px-3 py-3 text-xs font-mono text-palette-terminalLight overflow-auto">
+                            <pre className="min-h-12 w-full rounded-md bg-[#2a2a2a] px-4 py-3 text-[13px] font-mono text-palette-terminalLight overflow-auto">
                               {testCase.expectedOutput}
                             </pre>
                           ) : (
                             <textarea
-                              className="min-h-24 w-full rounded-md bg-palette-terminalSurface px-3 py-3 text-xs font-mono text-palette-terminalLight placeholder:text-palette-terminalLight/50 transition ring-1 ring-palette-terminalBorder hover:ring-palette-teal/50 focus-visible:ring-2 focus-visible:ring-palette-teal outline-none"
+                              className="min-h-12 w-full rounded-md bg-[#2a2a2a] px-4 py-3 text-[13px] font-mono text-palette-terminalLight placeholder:text-palette-terminalLight/50 transition ring-0 focus-visible:ring-1 focus-visible:ring-palette-teal outline-none resize-y"
                               value={testCase.expectedOutput}
                               onChange={(event) => onUpdateCustom(testCase.id, { expectedOutput: event.target.value })}
                               placeholder="Optional expected output..."
@@ -356,7 +368,7 @@ export function ProblemWorkspacePage() {
     return (
       <div className="grid min-h-[60vh] place-items-center">
         <div className="text-center">
-          <h1 className="text-xl font-heading font-semibold text-palette-light">Problem not found</h1>
+          <h1 className="text-xl font-bold text-palette-light">Problem not found</h1>
           <p className="mt-2 text-sm text-palette-muted">Generate a new problem or return to the dashboard.</p>
           <Link to="/dashboard" className="mt-4 inline-flex">
             <Button>Go to Dashboard</Button>

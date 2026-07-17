@@ -40,7 +40,7 @@ export const generateProblemWithGroq = async (request: GenerateProblemRequest): 
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      model: import.meta.env.VITE_GROQ_MODEL || "llama-3.1-70b-versatile",
+      model: import.meta.env.VITE_GROQ_MODEL || "llama-3.3-70b-versatile",
       temperature: 0.35,
       messages: [
         {
@@ -96,7 +96,7 @@ export const generateHintWithGroq = async (problem: Problem, level: number): Pro
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      model: import.meta.env.VITE_GROQ_MODEL || "llama-3.1-70b-versatile",
+      model: import.meta.env.VITE_GROQ_MODEL || "llama-3.3-70b-versatile",
       temperature: 0.25,
       messages: [
         {
