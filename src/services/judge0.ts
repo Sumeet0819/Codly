@@ -1,25 +1,52 @@
 import type { ExecutionResult, SubmissionStatus, SupportedLanguage, TestCase } from "../types/domain";
 import { getLanguage } from "../types/languages";
 
-interface WandboxResponse {
-  status: string;
-  signal: string;
-  compiler_output: string;
-  compiler_error: string;
-  compiler_message: string;
-  program_output: string;
-  program_error: string;
-  program_message: string;
-  permlink: string;
-  url: string;
+interface Judge0SubmissionResponse {
+  token: string;
+}
+
+interface Judge0ResultResponse {
+  stdout: string | null;
+  time: string | null;
+  memory: number | null;
+  stderr: string | null;
+  token: string;
+  compile_output: string | null;
+  message: string | null;
+  status: {
+    id: number;
+    description: string;
+  };
 }
 
 const normalizeOutput = (value: string): string => value.replace(/\r\n/g, "\n").trim();
 
-const mapStatus = (result: WandboxResponse, expectedOutput: string): SubmissionStatus => {
-  if (result.compiler_error) return "Compilation Error";
-  if (result.program_error || result.status !== "0") return "Runtime Error";
-  return normalizeOutput(result.program_output ?? "") === normalizeOutput(expectedOutput) ? "Accepted" : "Wrong Answer";
+const mapStatus = (result: Judge0ResultResponse, expectedOutput: string): SubmissionStatus => {
+  // Judge0 status IDs:
+  // 3: Accepted, 4: Wrong Answer, 5: Time Limit Exceeded, 6: Compilation Error, 7-12: Runtime Errors
+  if (result.status.id === 6) return "Compilation Error";
+  if (result.status.id > 4) return "Runtime Error";
+  
+  const actualOutput = result.stdout || "";
+  return normalizeOutput(actualOutput) === normalizeOutput(expectedOutput) ? "Accepted" : "Wrong Answer";
+};
+
+const pollResult = async (token: string): Promise<Judge0ResultResponse> => {
+  const maxAttempts = 15;
+  for (let i = 0; i < maxAttempts; i++) {
+    const response = await fetch(`https://ce.judge0.com/submissions/${token}?base64_encoded=false`);
+    if (!response.ok) throw new Error(`Failed to fetch result with ${response.status}`);
+    const result = (await response.json()) as Judge0ResultResponse;
+    
+    // Status 1: In Queue, 2: Processing
+    if (result.status.id > 2) {
+      return result;
+    }
+    
+    // Wait before polling again
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+  }
+  throw new Error("Execution timed out");
 };
 
 const runSingle = async (
@@ -28,50 +55,59 @@ const runSingle = async (
   testCase: TestCase,
 ): Promise<ExecutionResult> => {
   const langConfig = getLanguage(language);
-  
-  // fallback for unsupported languages (like Kotlin which we removed compiler ID for)
-  if (!langConfig.wandboxId) {
+
+  try {
+    const response = await fetch("https://ce.judge0.com/submissions?base64_encoded=false", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        source_code: code,
+        language_id: langConfig.judge0Id,
+        stdin: testCase.input || "",
+        expected_output: testCase.expectedOutput || "",
+      }),
+    });
+
+    if (!response.ok) throw new Error(`Code execution request failed with ${response.status}`);
+    const { token } = (await response.json()) as Judge0SubmissionResponse;
+    
+    const result = await pollResult(token);
+    const status = mapStatus(result, testCase.expectedOutput);
+    
+    return {
+      testCaseId: testCase.id,
+      input: testCase.input,
+      expectedOutput: testCase.expectedOutput,
+      actualOutput: result.stdout || "",
+      status,
+      runtimeMs: result.time ? Math.floor(parseFloat(result.time) * 1000) : undefined,
+      memoryKb: result.memory || undefined,
+      error: result.stderr || result.compile_output || result.message || undefined,
+    };
+  } catch (error: any) {
     return {
       testCaseId: testCase.id,
       input: testCase.input,
       expectedOutput: testCase.expectedOutput,
       actualOutput: "",
-      status: "Compilation Error",
-      error: `Language ${langConfig.label} is currently not supported by the free execution engine.`,
+      status: "Runtime Error",
+      error: error.message || "Unknown error",
     };
   }
-
-  const response = await fetch("https://wandbox.org/api/compile.json", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      compiler: langConfig.wandboxId,
-      code: code,
-      stdin: testCase.input || "",
-    }),
-  });
-
-  if (!response.ok) throw new Error(`Code execution request failed with ${response.status}`);
-  const result = (await response.json()) as WandboxResponse;
-  
-  const status = mapStatus(result, testCase.expectedOutput);
-  
-  return {
-    testCaseId: testCase.id,
-    input: testCase.input,
-    expectedOutput: testCase.expectedOutput,
-    actualOutput: result.program_output ?? "",
-    status,
-    runtimeMs: undefined, // Wandbox doesn't return exact runtime in ms in this endpoint
-    memoryKb: undefined,
-    error: result.compiler_error || result.program_error || undefined,
-  };
 };
 
 export const runCode = async (
   language: SupportedLanguage,
   code: string,
   testCases: TestCase[],
-): Promise<ExecutionResult[]> => Promise.all(testCases.map((testCase) => runSingle(language, code, testCase)));
+): Promise<ExecutionResult[]> => {
+  // Process sequentially to avoid rate limiting from Judge0 CE
+  const results: ExecutionResult[] = [];
+  for (const testCase of testCases) {
+    results.push(await runSingle(language, code, testCase));
+    await new Promise((r) => setTimeout(r, 500));
+  }
+  return results;
+};
