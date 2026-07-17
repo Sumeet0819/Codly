@@ -1,0 +1,702 @@
+[
+  {
+    "lang": "C",
+    "name": "gcc-head-c"
+  },
+  {
+    "lang": "C",
+    "name": "gcc-13.2.0-c"
+  },
+  {
+    "lang": "C",
+    "name": "gcc-12.3.0-c"
+  },
+  {
+    "lang": "C",
+    "name": "gcc-11.4.0-c"
+  },
+  {
+    "lang": "C",
+    "name": "gcc-10.5.0-c"
+  },
+  {
+    "lang": "C",
+    "name": "gcc-9.3.0-c"
+  },
+  {
+    "lang": "C",
+    "name": "gcc-8.4.0-c"
+  },
+  {
+    "lang": "C",
+    "name": "gcc-7.5.0-c"
+  },
+  {
+    "lang": "C",
+    "name": "gcc-6.5.0-c"
+  },
+  {
+    "lang": "CPP",
+    "name": "gcc-head-pp"
+  },
+  {
+    "lang": "C++",
+    "name": "gcc-head"
+  },
+  {
+    "lang": "C++",
+    "name": "gcc-13.2.0"
+  },
+  {
+    "lang": "C++",
+    "name": "gcc-12.3.0"
+  },
+  {
+    "lang": "C++",
+    "name": "gcc-11.4.0"
+  },
+  {
+    "lang": "C++",
+    "name": "gcc-10.5.0"
+  },
+  {
+    "lang": "C++",
+    "name": "gcc-9.3.0"
+  },
+  {
+    "lang": "C++",
+    "name": "gcc-8.4.0"
+  },
+  {
+    "lang": "C++",
+    "name": "gcc-7.5.0"
+  },
+  {
+    "lang": "C++",
+    "name": "gcc-6.5.0"
+  },
+  {
+    "lang": "C",
+    "name": "clang-head-c"
+  },
+  {
+    "lang": "C",
+    "name": "clang-17.0.1-c"
+  },
+  {
+    "lang": "C",
+    "name": "clang-16.0.4-c"
+  },
+  {
+    "lang": "C",
+    "name": "clang-15.0.7-c"
+  },
+  {
+    "lang": "C",
+    "name": "clang-14.0.6-c"
+  },
+  {
+    "lang": "CPP",
+    "name": "clang-head-pp"
+  },
+  {
+    "lang": "C++",
+    "name": "clang-head"
+  },
+  {
+    "lang": "C++",
+    "name": "clang-17.0.1"
+  },
+  {
+    "lang": "C++",
+    "name": "clang-16.0.4"
+  },
+  {
+    "lang": "C++",
+    "name": "clang-15.0.7"
+  },
+  {
+    "lang": "C++",
+    "name": "clang-14.0.6"
+  },
+  {
+    "lang": "C#",
+    "name": "mono-6.12.0.199"
+  },
+  {
+    "lang": "C#",
+    "name": "mono-5.20.1.34"
+  },
+  {
+    "lang": "Erlang",
+    "name": "erlang-27.1"
+  },
+  {
+    "lang": "Erlang",
+    "name": "erlang-26.2.5.3"
+  },
+  {
+    "lang": "Erlang",
+    "name": "erlang-25.3.2.13"
+  },
+  {
+    "lang": "Elixir",
+    "name": "elixir-1.17.3"
+  },
+  {
+    "lang": "Elixir",
+    "name": "elixir-1.16.3"
+  },
+  {
+    "lang": "Haskell",
+    "name": "ghc-9.10.1"
+  },
+  {
+    "lang": "Haskell",
+    "name": "ghc-9.0.1"
+  },
+  {
+    "lang": "Haskell",
+    "name": "ghc-8.10.4"
+  },
+  {
+    "lang": "D",
+    "name": "dmd-2.109.1"
+  },
+  {
+    "lang": "D",
+    "name": "gdc-head"
+  },
+  {
+    "lang": "D",
+    "name": "ldc-1.39.0"
+  },
+  {
+    "lang": "Java",
+    "name": "openjdk-jdk-22+36"
+  },
+  {
+    "lang": "Java",
+    "name": "openjdk-jdk-21+35"
+  },
+  {
+    "lang": "Rust",
+    "name": "rust-1.82.0"
+  },
+  {
+    "lang": "Rust",
+    "name": "rust-1.81.0"
+  },
+  {
+    "lang": "Rust",
+    "name": "rust-1.80.1"
+  },
+  {
+    "lang": "Rust",
+    "name": "rust-1.79.0"
+  },
+  {
+    "lang": "Rust",
+    "name": "rust-1.78.0"
+  },
+  {
+    "lang": "Rust",
+    "name": "rust-1.77.2"
+  },
+  {
+    "lang": "Rust",
+    "name": "rust-1.76.0"
+  },
+  {
+    "lang": "Rust",
+    "name": "rust-1.75.0"
+  },
+  {
+    "lang": "Rust",
+    "name": "rust-1.74.1"
+  },
+  {
+    "lang": "Rust",
+    "name": "rust-1.73.0"
+  },
+  {
+    "lang": "Rust",
+    "name": "rust-1.72.1"
+  },
+  {
+    "lang": "Rust",
+    "name": "rust-1.71.1"
+  },
+  {
+    "lang": "Rust",
+    "name": "rust-1.70.0"
+  },
+  {
+    "lang": "Rust",
+    "name": "rust-1.69.0"
+  },
+  {
+    "lang": "Rust",
+    "name": "rust-1.68.2"
+  },
+  {
+    "lang": "Rust",
+    "name": "rust-1.67.1"
+  },
+  {
+    "lang": "Rust",
+    "name": "rust-1.66.1"
+  },
+  {
+    "lang": "Rust",
+    "name": "rust-1.65.0"
+  },
+  {
+    "lang": "Rust",
+    "name": "rust-1.64.0"
+  },
+  {
+    "lang": "Python",
+    "name": "cpython-head"
+  },
+  {
+    "lang": "Python",
+    "name": "cpython-2.7-head"
+  },
+  {
+    "lang": "Python",
+    "name": "cpython-3.14.0"
+  },
+  {
+    "lang": "Python",
+    "name": "cpython-3.13.8"
+  },
+  {
+    "lang": "Python",
+    "name": "cpython-3.12.7"
+  },
+  {
+    "lang": "Python",
+    "name": "cpython-3.11.10"
+  },
+  {
+    "lang": "Python",
+    "name": "cpython-3.10.15"
+  },
+  {
+    "lang": "Python",
+    "name": "cpython-3.9.20"
+  },
+  {
+    "lang": "Python",
+    "name": "cpython-3.8.20"
+  },
+  {
+    "lang": "Python",
+    "name": "cpython-3.7.17"
+  },
+  {
+    "lang": "Python",
+    "name": "cpython-2.7.18"
+  },
+  {
+    "lang": "Ruby",
+    "name": "ruby-4.0.2"
+  },
+  {
+    "lang": "Ruby",
+    "name": "ruby-3.4.9"
+  },
+  {
+    "lang": "Ruby",
+    "name": "ruby-3.3.11"
+  },
+  {
+    "lang": "Ruby",
+    "name": "ruby-3.2.11"
+  },
+  {
+    "lang": "Ruby",
+    "name": "ruby-3.1.7"
+  },
+  {
+    "lang": "Ruby",
+    "name": "ruby-3.0.7"
+  },
+  {
+    "lang": "Ruby",
+    "name": "mruby-3.0.0"
+  },
+  {
+    "lang": "Ruby",
+    "name": "mruby-2.1.2"
+  },
+  {
+    "lang": "Scala",
+    "name": "scala-3.5.1"
+  },
+  {
+    "lang": "Scala",
+    "name": "scala-3.3.4"
+  },
+  {
+    "lang": "Scala",
+    "name": "scala-2.13.15"
+  },
+  {
+    "lang": "Groovy",
+    "name": "groovy-4.0.23"
+  },
+  {
+    "lang": "JavaScript",
+    "name": "nodejs-20.17.0"
+  },
+  {
+    "lang": "JavaScript",
+    "name": "nodejs-18.20.4"
+  },
+  {
+    "lang": "Swift",
+    "name": "swift-6.0.1"
+  },
+  {
+    "lang": "Swift",
+    "name": "swift-5.10.1"
+  },
+  {
+    "lang": "Perl",
+    "name": "perl-5.42.0"
+  },
+  {
+    "lang": "Perl",
+    "name": "perl-5.40.0"
+  },
+  {
+    "lang": "Perl",
+    "name": "perl-5.38.0"
+  },
+  {
+    "lang": "Perl",
+    "name": "perl-5.36.0"
+  },
+  {
+    "lang": "Perl",
+    "name": "perl-5.34.0"
+  },
+  {
+    "lang": "Perl",
+    "name": "perl-5.33.8"
+  },
+  {
+    "lang": "Perl",
+    "name": "perl-5.32.1"
+  },
+  {
+    "lang": "Perl",
+    "name": "perl-5.30.3"
+  },
+  {
+    "lang": "PHP",
+    "name": "php-8.3.12"
+  },
+  {
+    "lang": "PHP",
+    "name": "php-8.2.24"
+  },
+  {
+    "lang": "PHP",
+    "name": "php-8.1.30"
+  },
+  {
+    "lang": "PHP",
+    "name": "php-8.0.30"
+  },
+  {
+    "lang": "PHP",
+    "name": "php-7.4.33"
+  },
+  {
+    "lang": "PHP",
+    "name": "php-5.6.40"
+  },
+  {
+    "lang": "Lua",
+    "name": "lua-5.4.7"
+  },
+  {
+    "lang": "Lua",
+    "name": "lua-5.3.6"
+  },
+  {
+    "lang": "Lua",
+    "name": "lua-5.2.4"
+  },
+  {
+    "lang": "Lua",
+    "name": "luajit-2.0.5"
+  },
+  {
+    "lang": "Lua",
+    "name": "luajit-2.0.4"
+  },
+  {
+    "lang": "Lua",
+    "name": "luajit-2.0.3"
+  },
+  {
+    "lang": "SQL",
+    "name": "sqlite-3.46.1"
+  },
+  {
+    "lang": "SQL",
+    "name": "sqlite-3.35.5"
+  },
+  {
+    "lang": "Pascal",
+    "name": "fpc-3.2.2"
+  },
+  {
+    "lang": "Lisp",
+    "name": "clisp-2.49"
+  },
+  {
+    "lang": "Lazy K",
+    "name": "lazyk"
+  },
+  {
+    "lang": "Vim script",
+    "name": "vim-9.1.0758"
+  },
+  {
+    "lang": "Vim script",
+    "name": "vim-8.2.5172"
+  },
+  {
+    "lang": "Python",
+    "name": "pypy-3.10-v7.3.17"
+  },
+  {
+    "lang": "Python",
+    "name": "pypy-3.9-v7.3.16"
+  },
+  {
+    "lang": "Python",
+    "name": "pypy-3.8-v7.3.11"
+  },
+  {
+    "lang": "Python",
+    "name": "pypy-3.7-v7.3.9"
+  },
+  {
+    "lang": "Python",
+    "name": "pypy-2.7-v7.3.17"
+  },
+  {
+    "lang": "OCaml",
+    "name": "ocaml-5.2.0"
+  },
+  {
+    "lang": "OCaml",
+    "name": "ocaml-4.14.2"
+  },
+  {
+    "lang": "Go",
+    "name": "go-1.23.2"
+  },
+  {
+    "lang": "Go",
+    "name": "go-1.22.8"
+  },
+  {
+    "lang": "Go",
+    "name": "go-1.16.3"
+  },
+  {
+    "lang": "Go",
+    "name": "go-1.15.11"
+  },
+  {
+    "lang": "Go",
+    "name": "go-1.14.15"
+  },
+  {
+    "lang": "Lisp",
+    "name": "sbcl-2.4.9"
+  },
+  {
+    "lang": "Bash script",
+    "name": "bash"
+  },
+  {
+    "lang": "Pony",
+    "name": "pony-0.58.5"
+  },
+  {
+    "lang": "Crystal",
+    "name": "crystal-1.13.3"
+  },
+  {
+    "lang": "Nim",
+    "name": "nim-2.2.10"
+  },
+  {
+    "lang": "Nim",
+    "name": "nim-2.2.8"
+  },
+  {
+    "lang": "Nim",
+    "name": "nim-2.2.6"
+  },
+  {
+    "lang": "Nim",
+    "name": "nim-2.2.4"
+  },
+  {
+    "lang": "Nim",
+    "name": "nim-2.2.2"
+  },
+  {
+    "lang": "Nim",
+    "name": "nim-2.2.0"
+  },
+  {
+    "lang": "Nim",
+    "name": "nim-2.0.16"
+  },
+  {
+    "lang": "Nim",
+    "name": "nim-2.0.14"
+  },
+  {
+    "lang": "Nim",
+    "name": "nim-2.0.10"
+  },
+  {
+    "lang": "Nim",
+    "name": "nim-2.0.8"
+  },
+  {
+    "lang": "Nim",
+    "name": "nim-2.0.6"
+  },
+  {
+    "lang": "Nim",
+    "name": "nim-2.0.4"
+  },
+  {
+    "lang": "Nim",
+    "name": "nim-2.0.2"
+  },
+  {
+    "lang": "Nim",
+    "name": "nim-2.0.0"
+  },
+  {
+    "lang": "Nim",
+    "name": "nim-1.6.20"
+  },
+  {
+    "lang": "Nim",
+    "name": "nim-1.6.18"
+  },
+  {
+    "lang": "Nim",
+    "name": "nim-1.6.14"
+  },
+  {
+    "lang": "Nim",
+    "name": "nim-1.6.12"
+  },
+  {
+    "lang": "Nim",
+    "name": "nim-1.6.10"
+  },
+  {
+    "lang": "Nim",
+    "name": "nim-1.6.8"
+  },
+  {
+    "lang": "Nim",
+    "name": "nim-1.6.6"
+  },
+  {
+    "lang": "Nim",
+    "name": "nim-1.6.4"
+  },
+  {
+    "lang": "Nim",
+    "name": "nim-1.6.0"
+  },
+  {
+    "lang": "Nim",
+    "name": "nim-1.4.8"
+  },
+  {
+    "lang": "Nim",
+    "name": "nim-1.4.6"
+  },
+  {
+    "lang": "Nim",
+    "name": "nim-1.2.8"
+  },
+  {
+    "lang": "Nim",
+    "name": "nim-1.0.10"
+  },
+  {
+    "lang": "OpenSSL",
+    "name": "openssl-3.3.2"
+  },
+  {
+    "lang": "OpenSSL",
+    "name": "openssl-1.1.1w"
+  },
+  {
+    "lang": "OpenSSL",
+    "name": "openssl-1.0.2u"
+  },
+  {
+    "lang": "OpenSSL",
+    "name": "openssl-0.9.8zh"
+  },
+  {
+    "lang": "C#",
+    "name": "dotnetcore-8.0.402"
+  },
+  {
+    "lang": "C#",
+    "name": "dotnetcore-6.0.425"
+  },
+  {
+    "lang": "R",
+    "name": "r-4.4.1"
+  },
+  {
+    "lang": "TypeScript",
+    "name": "typescript-5.6.2"
+  },
+  {
+    "lang": "Julia",
+    "name": "julia-1.10.5"
+  },
+  {
+    "lang": "Julia",
+    "name": "julia-1.6.1"
+  },
+  {
+    "lang": "Julia",
+    "name": "julia-1.0.5"
+  },
+  {
+    "lang": "Zig",
+    "name": "zig-head"
+  },
+  {
+    "lang": "Zig",
+    "name": "zig-0.13.0"
+  },
+  {
+    "lang": "Zig",
+    "name": "zig-0.9.1"
+  }
+]
