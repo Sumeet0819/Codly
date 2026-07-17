@@ -52,6 +52,11 @@ export const generateProblemWithGroq = async (request: GenerateProblemRequest): 
           role: "user",
           content: `Create a ${request.difficulty} ${request.topic} DSA problem for ${request.language}.
 Custom prompt: ${request.customPrompt || "No custom prompt"}
+
+IMPORTANT: The \`starterCode\` for ALL languages MUST ONLY include the function definition for the user to implement (always named \`solve\`, or \`Solve\` in C#). 
+DO NOT include any standard I/O boilerplate, \`main\` functions, or class wrappers (except in Java where a static method is fine without the class). The execution wrapper will be injected in the background.
+Ensure the function definition is properly formatted across multiple lines with standard indentation, and includes a comment like \`// Write your code here\` inside the function body. Do not write one-liners.
+
 Schema: {
   "title": string,
   "description": string,

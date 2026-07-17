@@ -19,6 +19,37 @@ interface Judge0ResultResponse {
   };
 }
 
+const wrapCode = (language: SupportedLanguage, userCode: string): string => {
+  // If the user manually includes the main method or wrapper, don't double-wrap
+  if (userCode.includes("main(") || userCode.includes("sys.stdin") || userCode.includes("fs.readFileSync")) {
+    return userCode;
+  }
+
+  switch (language) {
+    case "javascript":
+    case "typescript":
+      return `${userCode}\n\nconst inputStr = require('fs').readFileSync(0, 'utf8').trim();\nlet parsedInput;\ntry { parsedInput = JSON.parse(inputStr); } catch(e) { parsedInput = inputStr; }\nconsole.log(solve(parsedInput));`;
+    case "python":
+      return `import sys\nimport ast\n\n${userCode}\n\nif __name__ == '__main__':\n    raw_input = sys.stdin.read().strip()\n    try:\n        parsed_input = ast.literal_eval(raw_input)\n    except (ValueError, SyntaxError):\n        parsed_input = raw_input\n    print(solve(parsed_input))`;
+    case "java":
+      return `import java.io.*;\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n    StringBuilder input = new StringBuilder();\n    for (String line; (line = br.readLine()) != null;) input.append(line).append('\\n');\n    System.out.print(solve(input.toString().trim()));\n  }\n\n${userCode}\n}`;
+    case "cpp":
+      return `#include <bits/stdc++.h>\nusing namespace std;\n\n${userCode}\n\nint main() {\n  ios::sync_with_stdio(false);\n  cin.tie(nullptr);\n  string input((istreambuf_iterator<char>(cin)), istreambuf_iterator<char>());\n  cout << solve(input);\n  return 0;\n}`;
+    case "c":
+      return userCode;
+    case "csharp":
+      return `using System;\n\npublic class Program {\n  public static void Main() {\n    var input = Console.In.ReadToEnd();\n    Console.Write(Solve(input));\n  }\n\n${userCode}\n}`;
+    case "go":
+      return `package main\n\nimport (\n  "fmt"\n  "io"\n  "os"\n)\n\n${userCode}\n\nfunc main() {\n  data, _ := io.ReadAll(os.Stdin)\n  fmt.Print(solve(string(data)))\n}`;
+    case "kotlin":
+      return `import java.io.BufferedInputStream\n\n${userCode}\n\nfun main() {\n  val input = BufferedInputStream(System.\`in\`).readBytes().toString(Charsets.UTF_8)\n  print(solve(input))\n}`;
+    case "rust":
+      return `use std::io::{self, Read};\n\n${userCode}\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    print!("{}", solve(&input));\n}`;
+    default:
+      return userCode;
+  }
+};
+
 const normalizeOutput = (value: string): string => value.replace(/\r\n/g, "\n").trim();
 
 const mapStatus = (result: Judge0ResultResponse, expectedOutput: string): SubmissionStatus => {
@@ -58,7 +89,7 @@ const runSingle = async (
 
   try {
     const payload = {
-      source_code: code,
+      source_code: wrapCode(language, code),
       language_id: langConfig.judge0Id,
       stdin: testCase.input || "",
       expected_output: testCase.expectedOutput || "",

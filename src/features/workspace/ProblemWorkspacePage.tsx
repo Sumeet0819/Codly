@@ -248,10 +248,17 @@ function TerminalPanel({
                           <span className="text-[11px] font-bold text-palette-muted uppercase tracking-wider">Expected Output</span>
                           <pre className="min-h-12 w-full rounded-md bg-[#2a2a2a] px-4 py-3 text-[13px] font-mono text-palette-terminalLight overflow-auto">{result.expectedOutput}</pre>
                         </div>
-                        <div className="grid gap-2">
-                          <span className="text-[11px] font-bold text-palette-muted uppercase tracking-wider">Actual Output</span>
-                          <pre className="min-h-12 w-full rounded-md bg-[#2a2a2a] px-4 py-3 text-[13px] font-mono text-palette-terminalLight overflow-auto">{result.actualOutput || result.error || "No output"}</pre>
-                        </div>
+                        {result.error ? (
+                          <div className="grid gap-2 col-span-1 md:col-span-3">
+                            <span className="text-[11px] font-bold text-red-400 uppercase tracking-wider">Console Error</span>
+                            <pre className="min-h-12 w-full rounded-md bg-[#2a1a1a] border border-red-900/50 px-4 py-3 text-[13px] font-mono text-red-400 overflow-auto whitespace-pre-wrap">{result.error}</pre>
+                          </div>
+                        ) : (
+                          <div className="grid gap-2">
+                            <span className="text-[11px] font-bold text-palette-muted uppercase tracking-wider">Actual Output</span>
+                            <pre className="min-h-12 w-full rounded-md bg-[#2a2a2a] px-4 py-3 text-[13px] font-mono text-palette-terminalLight overflow-auto">{result.actualOutput || "No output"}</pre>
+                          </div>
+                        )}
                       </div>
                     </div>
                   );

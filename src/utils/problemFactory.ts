@@ -2,16 +2,16 @@ import type { GenerateProblemRequest, Problem, StarterCodeMap } from "../types/d
 import { createId } from "./id";
 
 export const defaultStarterCode: StarterCodeMap = {
-  javascript: "function solve(input) {\n  // Write your solution here\n  return \"\";\n}\n\nconsole.log(solve(require('fs').readFileSync(0, 'utf8')));",
-  typescript: "function solve(input: string): string {\n  // Write your solution here\n  return \"\";\n}\n\nconsole.log(solve(require('fs').readFileSync(0, 'utf8')));",
-  python: "import sys\n\ndef solve(data: str) -> str:\n    # Write your solution here\n    return \"\"\n\nprint(solve(sys.stdin.read()))",
-  java: "import java.io.*;\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n    StringBuilder input = new StringBuilder();\n    for (String line; (line = br.readLine()) != null;) input.append(line).append('\\n');\n    System.out.print(solve(input.toString()));\n  }\n\n  static String solve(String input) {\n    return \"\";\n  }\n}",
-  cpp: "#include <bits/stdc++.h>\nusing namespace std;\n\nstring solve(const string& input) {\n  return \"\";\n}\n\nint main() {\n  ios::sync_with_stdio(false);\n  cin.tie(nullptr);\n  string input((istreambuf_iterator<char>(cin)), istreambuf_iterator<char>());\n  cout << solve(input);\n  return 0;\n}",
+  javascript: "function solve(input) {\n  // Write your solution here\n  return \"\";\n}",
+  typescript: "function solve(input: string): string {\n  // Write your solution here\n  return \"\";\n}",
+  python: "def solve(data: str) -> str:\n    # Write your solution here\n    return \"\"",
+  java: "static String solve(String input) {\n  // Write your solution here\n  return \"\";\n}",
+  cpp: "string solve(const string& input) {\n  // Write your solution here\n  return \"\";\n}",
   c: "#include <stdio.h>\n\nint main(void) {\n  // Write your solution here\n  return 0;\n}",
-  csharp: "using System;\n\npublic class Program {\n  public static void Main() {\n    var input = Console.In.ReadToEnd();\n    Console.Write(Solve(input));\n  }\n\n  static string Solve(string input) => \"\";\n}",
-  go: "package main\n\nimport (\n  \"fmt\"\n  \"io\"\n  \"os\"\n)\n\nfunc solve(input string) string {\n  return \"\"\n}\n\nfunc main() {\n  data, _ := io.ReadAll(os.Stdin)\n  fmt.Print(solve(string(data)))\n}",
-  kotlin: "import java.io.BufferedInputStream\n\nfun solve(input: String): String = \"\"\n\nfun main() {\n  val input = BufferedInputStream(System.`in`).readBytes().toString(Charsets.UTF_8)\n  print(solve(input))\n}",
-  rust: "use std::io::{self, Read};\n\nfn solve(input: &str) -> String {\n    String::new()\n}\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    print!(\"{}\", solve(&input));\n}",
+  csharp: "static string Solve(string input) {\n  // Write your solution here\n  return \"\";\n}",
+  go: "func solve(input string) string {\n  // Write your solution here\n  return \"\"\n}",
+  kotlin: "fun solve(input: String): String {\n  // Write your solution here\n  return \"\"\n}",
+  rust: "fn solve(input: &str) -> String {\n  // Write your solution here\n  String::new()\n}",
 };
 
 export const createFallbackProblem = (request: GenerateProblemRequest): Problem => {
