@@ -1,4 +1,4 @@
-import { Save } from "lucide-react";
+import { Save, Settings2 } from "lucide-react";
 import { PageHeader } from "../../components/layout/PageHeader";
 import { Button } from "../../components/ui/Button";
 import { Field, inputClassName } from "../../components/ui/Field";
