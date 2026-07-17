@@ -57,24 +57,37 @@ const runSingle = async (
   const langConfig = getLanguage(language);
 
   try {
+    const payload = {
+      source_code: code,
+      language_id: langConfig.judge0Id,
+      stdin: testCase.input || "",
+      expected_output: testCase.expectedOutput || "",
+    };
+    console.log(`[Judge0 Request] Language: ${language}, TestCase: ${testCase.id}`);
+    console.log(`[Judge0 Payload]:`, JSON.stringify(payload, null, 2));
+
     const response = await fetch("https://ce.judge0.com/submissions?base64_encoded=false", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        source_code: code,
-        language_id: langConfig.judge0Id,
-        stdin: testCase.input || "",
-        expected_output: testCase.expectedOutput || "",
-      }),
+      body: JSON.stringify(payload),
     });
 
-    if (!response.ok) throw new Error(`Code execution request failed with ${response.status}`);
+    if (!response.ok) {
+      console.error(`[Judge0 Error] Code execution request failed with status: ${response.status}`);
+      const text = await response.text();
+      console.error(`[Judge0 Error] Response text: ${text}`);
+      throw new Error(`Code execution request failed with ${response.status}`);
+    }
     const { token } = (await response.json()) as Judge0SubmissionResponse;
+    console.log(`[Judge0 Submission] Token received: ${token}`);
     
     const result = await pollResult(token);
+    console.log(`[Judge0 Result] Polled response for token ${token}:`, JSON.stringify(result, null, 2));
+    
     const status = mapStatus(result, testCase.expectedOutput);
+    console.log(`[Judge0 Status] Mapped status: ${status}, Expected: ${testCase.expectedOutput}, Actual: ${result.stdout}`);
     
     return {
       testCaseId: testCase.id,
@@ -87,6 +100,7 @@ const runSingle = async (
       error: result.stderr || result.compile_output || result.message || undefined,
     };
   } catch (error: any) {
+    console.error(`[Judge0 Error] Exception during runSingle:`, error);
     return {
       testCaseId: testCase.id,
       input: testCase.input,
