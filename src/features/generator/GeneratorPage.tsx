@@ -5,7 +5,7 @@ import { PageHeader } from "../../components/layout/PageHeader";
 import { Button } from "../../components/ui/Button";
 import { Field, inputClassName } from "../../components/ui/Field";
 import { Panel } from "../../components/ui/Panel";
-import { addProblem, setGenerationStatus } from "../../store/problemSlice";
+import { persistProblem, setGenerationStatus } from "../../store/problemSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import type { Difficulty, SupportedLanguage, Topic } from "../../types/domain";
 import { languageOptions } from "../../types/languages";
@@ -28,8 +28,8 @@ export function GeneratorPage() {
     dispatch(setGenerationStatus({ status: "loading" }));
     try {
       const problem = await generateProblemWithGroq({ difficulty, topic, language, customPrompt });
-      dispatch(addProblem(problem));
-      navigate(`/problem/${problem.id}`);
+      const savedProblem = await dispatch(persistProblem(problem)).unwrap();
+      navigate(`/problem/${savedProblem.id}`);
     } catch (error) {
       dispatch(setGenerationStatus({ status: "failed", error: error instanceof Error ? error.message : "Problem generation failed" }));
     }

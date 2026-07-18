@@ -2,17 +2,27 @@ import { Link } from "react-router-dom";
 import { PageHeader } from "../../components/layout/PageHeader";
 import { Panel } from "../../components/ui/Panel";
 import { StatusBadge } from "../../components/ui/StatusBadge";
-import { useAppSelector } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { fetchSubmissions } from "../../store/submissionSlice";
+import { useEffect } from "react";
 import { formatDateTime, formatDuration } from "../../utils/date";
 
 export function HistoryPage() {
+  const dispatch = useAppDispatch();
   const submissions = useAppSelector((state) => state.submissions.submissions);
+  const fetchStatus = useAppSelector((state) => state.submissions.fetchStatus);
+
+  useEffect(() => {
+    dispatch(fetchSubmissions());
+  }, [dispatch]);
 
   return (
     <>
-      <PageHeader title="Submission History" description="Review accepted and failed submissions stored locally in this browser." />
+      <PageHeader title="Submission History" description="Review accepted and failed submissions stored locally and on the server." />
       <Panel>
-        {submissions.length === 0 ? (
+        {fetchStatus === "loading" ? (
+          <div className="p-8 text-center text-sm text-palette-muted">Loading submissions...</div>
+        ) : submissions.length === 0 ? (
           <div className="rounded-md border border-dashed border-palette-border p-8 text-center text-sm text-palette-muted">
             You haven't made any submissions yet. Start practicing to build your history!
           </div>

@@ -150,3 +150,12 @@ export const getSubmissions = async (req: Request, res: Response): Promise<void>
     res.status(500).json({ error: err.message });
   }
 };
+
+export const getAllSubmissions = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const submissions = await Submission.find().sort({ createdAt: -1 });
+    res.json(submissions);
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
+};

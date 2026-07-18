@@ -7,13 +7,23 @@ import { Metric } from "../../components/ui/Metric";
 import { Panel } from "../../components/ui/Panel";
 import { ProgressBar } from "../../components/ui/ProgressBar";
 import { StatusBadge } from "../../components/ui/StatusBadge";
-import { useAppSelector } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { fetchProblems } from "../../store/problemSlice";
+import { useEffect } from "react";
 import { difficulties, topics } from "../../types/topics";
 import { formatDateTime, formatDuration, getLastNDays } from "../../utils/date";
 
 export function DashboardPage() {
+  const dispatch = useAppDispatch();
   const { stats, recentActivity } = useAppSelector((state) => state.dashboard);
   const problems = useAppSelector((state) => state.problems.problems);
+  const status = useAppSelector((state) => state.problems.status);
+
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchProblems());
+    }
+  }, [dispatch, status]);
 
   const solvedByTopic = new Map<string, number>();
   const totalByTopic = new Map<string, number>();

@@ -18,11 +18,16 @@ const rootReducer = combineReducers({
 
 export type RootState = ReturnType<typeof rootReducer>;
 
-const preloadedState = loadJson<Partial<RootState>>(STORAGE_KEY, {});
+const savedState = loadJson<Partial<RootState>>(STORAGE_KEY, {});
+const preloadedState = {
+  ...savedState,
+  problems: undefined,
+  submissions: undefined,
+};
 
 export const store = configureStore({
   reducer: rootReducer,
-  preloadedState,
+  preloadedState: preloadedState as any,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
@@ -30,7 +35,12 @@ export const store = configureStore({
 });
 
 store.subscribe(() => {
-  saveJson(STORAGE_KEY, store.getState());
+  const state = store.getState();
+  saveJson(STORAGE_KEY, {
+    dashboard: state.dashboard,
+    settings: state.settings,
+    workspace: state.workspace,
+  });
 });
 
 export type AppDispatch = typeof store.dispatch;

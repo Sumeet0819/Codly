@@ -10,45 +10,15 @@ import { StatusBadge } from "../../components/ui/StatusBadge";
 import { addHint, addCustomTestCase, getCodeKey, removeCustomTestCase, setActiveProblem, updateCode, updateCustomTestCase } from "../../store/workspaceSlice";
 import { ingestSubmission } from "../../store/dashboardSlice";
 import { markProblemSolved } from "../../store/problemSlice";
-import { recordRun, recordSubmission } from "../../store/submissionSlice";
+import { executeCode, recordRun } from "../../store/submissionSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import type { ExecutionResult, Problem, Submission, SubmissionStatus, SupportedLanguage, TestCase } from "../../types/domain";
 import { getLanguage, languageOptions } from "../../types/languages";
 import { formatDateTime, formatDuration } from "../../utils/date";
 import { createId } from "../../utils/id";
 import { generateHintWithGroq } from "../../services/groq";
-import { runCode } from "../../services/judge0";
 
 type MobileTab = "problem" | "editor" | "terminal";
-
-const getAggregateStatus = (results: ExecutionResult[]): SubmissionStatus => {
-  if (results.length === 0) return "Pending";
-  if (results.every((result) => result.status === "Accepted")) return "Accepted";
-  return results.find((result) => result.status !== "Accepted")?.status ?? "Wrong Answer";
-};
-
-const createSubmission = (
-  problem: Problem,
-  language: SupportedLanguage,
-  code: string,
-  results: ExecutionResult[],
-  solveTimeSeconds: number,
-): Submission => {
-  const status = getAggregateStatus(results);
-  return {
-    id: createId("submission"),
-    problemId: problem.id,
-    problemTitle: problem.title,
-    language,
-    status,
-    code,
-    results,
-    runtimeMs: Math.max(...results.map((result) => result.runtimeMs ?? 0), 0),
-    memoryKb: Math.max(...results.map((result) => result.memoryKb ?? 0), 0),
-    solveTimeSeconds,
-    createdAt: new Date().toISOString(),
-  };
-};
 
 function ProblemPanel({ problem, onHint, hintLoading }: { problem: Problem; onHint: () => void; hintLoading: boolean }) {
   const hints = useAppSelector((state) => state.workspace.hintsByProblem[problem.id] ?? []);
@@ -393,15 +363,31 @@ export function ProblemWorkspacePage() {
     setRunning(true);
     dispatch(updateCode({ problemId: problem.id, language, code }));
     try {
-      const results = await runCode(language, code, testCases);
-      const submission = createSubmission(problem, language, code, results, solveTimeSeconds);
-      if (shouldSubmit) {
-        dispatch(recordSubmission(submission));
-        if (submission.status !== "Pending") dispatch(ingestSubmission(submission));
-        if (submission.status === "Accepted") dispatch(markProblemSolved({ problemId: problem.id, solvedAt: submission.createdAt }));
-      } else {
-        dispatch(recordRun(submission));
+      const result = await dispatch(
+        executeCode({
+          problemId: problem.id,
+          language,
+          code,
+          customTestCases: testCases,
+          shouldSubmit,
+          solveTimeSeconds,
+        }),
+      ).unwrap();
+
+      if (result.isSubmission) {
+        if (shouldSubmit) {
+          if (result.data.status !== "Pending") {
+            dispatch(ingestSubmission(result.data));
+          }
+          if (result.data.status === "Accepted") {
+            dispatch(markProblemSolved({ problemId: problem.id, solvedAt: result.data.createdAt }));
+          }
+        } else {
+          dispatch(recordRun(result.data));
+        }
       }
+    } catch (error) {
+      console.error("Run tests failed:", error);
     } finally {
       setRunning(false);
     }

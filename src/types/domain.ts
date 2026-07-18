@@ -41,6 +41,7 @@ export interface Example {
 
 export interface TestCase {
   id: string;
+  _id?: string;
   input: string;
   expectedOutput: string;
   hidden?: boolean;
@@ -52,6 +53,7 @@ export interface StarterCodeMap {
 
 export interface Problem {
   id: string;
+  _id?: string;
   title: string;
   difficulty: Difficulty;
   topic: Topic;
@@ -87,6 +89,7 @@ export interface ExecutionResult {
 
 export interface Submission {
   id: string;
+  _id?: string;
   problemId: string;
   problemTitle: string;
   language: SupportedLanguage;
