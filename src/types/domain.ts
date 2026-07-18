@@ -62,6 +62,7 @@ export interface Problem {
   examples: Example[];
   constraints: string[];
   notes?: string;
+  methodName?: string;
   starterCode: StarterCodeMap;
   publicTestCases: TestCase[];
   hiddenTestCases: TestCase[];

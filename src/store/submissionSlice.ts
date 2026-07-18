@@ -38,6 +38,7 @@ interface ExecutePayload {
   customTestCases?: TestCase[];
   shouldSubmit?: boolean;
   solveTimeSeconds?: number;
+  methodName?: string;
 }
 
 export const executeCode = createAsyncThunk(

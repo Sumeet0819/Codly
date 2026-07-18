@@ -8,6 +8,7 @@ const problemSchema = new mongoose.Schema({
   examples: [{ input: String, output: String, explanation: String }],
   constraints: [String],
   notes: String,
+  methodName: String,
   starterCode: { type: Map, of: String },
   publicTestCases: [{ input: String, expectedOutput: String }],
   hiddenTestCases: [{ input: String, expectedOutput: String, hidden: Boolean }],

@@ -444,6 +444,7 @@ export function ProblemWorkspacePage() {
           customTestCases: testCases,
           shouldSubmit,
           solveTimeSeconds,
+          methodName: problem.methodName,
         }),
       ).unwrap();
 

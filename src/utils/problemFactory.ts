@@ -34,6 +34,7 @@ export const createFallbackProblem = (request: GenerateProblemRequest): Problem 
     ],
     constraints: ["1 <= n <= 10^5", "Input values fit in 32-bit signed integers", "Target O(n log n) or better"],
     notes: "This local fallback was created because the AI response was unavailable or malformed.",
+    methodName: "solve",
     starterCode: defaultStarterCode,
     publicTestCases: [
       { id: createId("tc"), input: "5\n1 2 3 4 5", expectedOutput: "15" },

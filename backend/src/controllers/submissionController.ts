@@ -16,28 +16,28 @@ const LANGUAGE_MAP: Record<string, number> = {
   rust: 108
 };
 
-const wrapCode = (language: string, userCode: string): string => {
+const wrapCode = (language: string, userCode: string, methodName: string): string => {
   if (userCode.includes("main(") || userCode.includes("sys.stdin") || userCode.includes("fs.readFileSync")) {
     return userCode;
   }
   switch (language) {
     case "javascript":
     case "typescript":
-      return `${userCode}\n\nconst inputStr = require('fs').readFileSync(0, 'utf8').trim();\nlet parsedInput;\ntry { parsedInput = JSON.parse(inputStr); } catch(e) { parsedInput = inputStr; }\nconsole.log(solve(parsedInput));`;
+      return `${userCode}\n\nconst inputStr = require('fs').readFileSync(0, 'utf8').trim();\nlet parsedInput;\ntry { parsedInput = JSON.parse(inputStr); } catch(e) { parsedInput = inputStr; }\nconsole.log(${methodName}(parsedInput));`;
     case "python":
-      return `import sys\nimport ast\n\n${userCode}\n\nif __name__ == '__main__':\n    raw_input = sys.stdin.read().strip()\n    try:\n        parsed_input = ast.literal_eval(raw_input)\n    except (ValueError, SyntaxError):\n        parsed_input = raw_input\n    print(solve(parsed_input))`;
+      return `import sys\nimport ast\n\n${userCode}\n\nif __name__ == '__main__':\n    raw_input = sys.stdin.read().strip()\n    try:\n        parsed_input = ast.literal_eval(raw_input)\n    except (ValueError, SyntaxError):\n        parsed_input = raw_input\n    print(${methodName}(parsed_input))`;
     case "java":
-      return `import java.io.*;\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n    StringBuilder input = new StringBuilder();\n    for (String line; (line = br.readLine()) != null;) input.append(line).append('\\n');\n    System.out.print(solve(input.toString().trim()));\n  }\n\n${userCode}\n}`;
+      return `import java.io.*;\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n    StringBuilder input = new StringBuilder();\n    for (String line; (line = br.readLine()) != null;) input.append(line).append('\\n');\n    System.out.print(${methodName}(input.toString().trim()));\n  }\n\n${userCode}\n}`;
     case "cpp":
-      return `#include <bits/stdc++.h>\nusing namespace std;\n\n${userCode}\n\nint main() {\n  ios::sync_with_stdio(false);\n  cin.tie(nullptr);\n  string input((istreambuf_iterator<char>(cin)), istreambuf_iterator<char>());\n  cout << solve(input);\n  return 0;\n}`;
+      return `#include <bits/stdc++.h>\nusing namespace std;\n\n${userCode}\n\nint main() {\n  ios::sync_with_stdio(false);\n  cin.tie(nullptr);\n  string input((istreambuf_iterator<char>(cin)), istreambuf_iterator<char>());\n  cout << ${methodName}(input);\n  return 0;\n}`;
     case "csharp":
-      return `using System;\n\npublic class Program {\n  public static void Main() {\n    var input = Console.In.ReadToEnd();\n    Console.Write(Solve(input));\n  }\n\n${userCode}\n}`;
+      return `using System;\n\npublic class Program {\n  public static void Main() {\n    var input = Console.In.ReadToEnd();\n    Console.Write(${methodName}(input));\n  }\n\n${userCode}\n}`;
     case "go":
-      return `package main\n\nimport (\n  "fmt"\n  "io"\n  "os"\n)\n\n${userCode}\n\nfunc main() {\n  data, _ := io.ReadAll(os.Stdin)\n  fmt.Print(solve(string(data)))\n}`;
+      return `package main\n\nimport (\n  "fmt"\n  "io"\n  "os"\n)\n\n${userCode}\n\nfunc main() {\n  data, _ := io.ReadAll(os.Stdin)\n  fmt.Print(${methodName}(string(data)))\n}`;
     case "kotlin":
-      return `import java.io.BufferedInputStream\n\n${userCode}\n\nfun main() {\n  val input = BufferedInputStream(System.\`in\`).readBytes().toString(Charsets.UTF_8)\n  print(solve(input))\n}`;
+      return `import java.io.BufferedInputStream\n\n${userCode}\n\nfun main() {\n  val input = BufferedInputStream(System.\`in\`).readBytes().toString(Charsets.UTF_8)\n  print(${methodName}(input))\n}`;
     case "rust":
-      return `use std::io::{self, Read};\n\n${userCode}\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    print!("{}", solve(&input));\n}`;
+      return `use std::io::{self, Read};\n\n${userCode}\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    print!("{}", ${methodName}(&input));\n}`;
     default:
       return userCode;
   }
@@ -56,10 +56,11 @@ const pollJudge0 = async (token: string) => {
 
 export const executeCode = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { problemId, language, code, customTestCases, shouldSubmit, solveTimeSeconds } = req.body;
+    const { problemId, language, code, customTestCases, shouldSubmit, solveTimeSeconds, methodName: reqMethodName } = req.body;
     
     let testCases = customTestCases || [];
     let problemTitle = "Custom Run";
+    let methodName = reqMethodName || "solve";
 
     if (problemId) {
       const problem = await Problem.findById(problemId);
@@ -68,10 +69,13 @@ export const executeCode = async (req: Request, res: Response): Promise<void> =>
       if (!customTestCases || customTestCases.length === 0) {
         testCases = shouldSubmit ? [...problem.publicTestCases, ...problem.hiddenTestCases] : problem.publicTestCases;
       }
+      if (problem.methodName) {
+        methodName = problem.methodName;
+      }
     }
 
     const languageId = LANGUAGE_MAP[language] || 113; // default python
-    const wrappedCode = wrapCode(language, code);
+    const wrappedCode = wrapCode(language, code, methodName);
     const results = [];
 
     for (const tc of testCases) {

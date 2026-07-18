@@ -21,6 +21,7 @@ const normalizeProblem = (raw: unknown, request: GenerateProblemRequest): Proble
     id: createId("problem"),
     difficulty: request.difficulty,
     topic: request.topic,
+    methodName: data.methodName || "solve",
     starterCode: { ...defaultStarterCode, ...(data.starterCode ?? {}) },
     publicTestCases: (data.publicTestCases ?? []).map((test) => ({ ...test, id: test.id || createId("tc") })),
     hiddenTestCases: (data.hiddenTestCases ?? []).map((test) => ({ ...test, id: test.id || createId("tc"), hidden: true })),
@@ -53,7 +54,7 @@ export const generateProblemWithGroq = async (request: GenerateProblemRequest): 
           content: `Create a ${request.difficulty} ${request.topic} DSA problem for ${request.language}.
 Custom prompt: ${request.customPrompt || "No custom prompt"}
 
-IMPORTANT: The \`starterCode\` for ALL languages MUST ONLY include the function definition for the user to implement (always named \`solve\`, or \`Solve\` in C#). 
+IMPORTANT: The \`starterCode\` for ALL languages MUST ONLY include the function definition for the user to implement. Choose a descriptive, idiomatic function name based on the problem (e.g. \`isArmstrong\`, \`twoSum\`). Provide this name exactly as you used it in the \`methodName\` property. For C#, capitalize the first letter (e.g. \`IsArmstrong\`).
 DO NOT include any standard I/O boilerplate, \`main\` functions, or class wrappers (except in Java where a static method is fine without the class). The execution wrapper will be injected in the background.
 Ensure the function definition is properly formatted across multiple lines with standard indentation, and includes a comment like \`// Write your code here\` inside the function body. Do not write one-liners.
 
@@ -63,6 +64,7 @@ Schema: {
   "examples": [{"input": string, "output": string, "explanation": string}],
   "constraints": string[],
   "notes": string,
+  "methodName": string,
   "starterCode": {"javascript": string, "typescript": string, "python": string, "java": string, "cpp": string, "c": string, "csharp": string, "go": string, "kotlin": string, "rust": string},
   "publicTestCases": [{"input": string, "expectedOutput": string}],
   "hiddenTestCases": [{"input": string, "expectedOutput": string}],
