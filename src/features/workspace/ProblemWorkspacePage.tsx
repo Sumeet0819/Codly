@@ -9,7 +9,7 @@ import { Field, inputClassName } from "../../components/ui/Field";
 import { StatusBadge } from "../../components/ui/StatusBadge";
 import { addHint, addCustomTestCase, getCodeKey, removeCustomTestCase, setActiveProblem, updateCode, updateCustomTestCase } from "../../store/workspaceSlice";
 import { ingestSubmission } from "../../store/dashboardSlice";
-import { markProblemSolved } from "../../store/problemSlice";
+import { markProblemSolved, fetchProblems, deleteProblem } from "../../store/problemSlice";
 import { executeCode, recordRun } from "../../store/submissionSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import type { ExecutionResult, Problem, Submission, SubmissionStatus, SupportedLanguage, TestCase } from "../../types/domain";
@@ -324,7 +324,9 @@ export function ProblemWorkspacePage() {
   const { id } = useParams();
   const location = useLocation();
   const dispatch = useAppDispatch();
-  const problem = useAppSelector((state) => state.problems.problems.find((item) => item.id === id));
+  const problems = useAppSelector((state) => state.problems.problems);
+  const status = useAppSelector((state) => state.problems.status);
+  const problem = problems.find((item) => item.id === id);
   const settings = useAppSelector((state) => state.settings);
   const workspace = useAppSelector((state) => state.workspace);
   const lastRun = useAppSelector((state) => (id ? state.submissions.lastRunByProblem[id] : undefined));
@@ -339,6 +341,12 @@ export function ProblemWorkspacePage() {
     if (problem) dispatch(setActiveProblem(problem.id));
   }, [dispatch, problem]);
 
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchProblems());
+    }
+  }, [dispatch, status]);
+
   const code = useMemo(() => {
     if (!problem) return "";
     return workspace.codeByProblemLanguage[getCodeKey(problem.id, language)] ?? problem.starterCode[language] ?? "";
@@ -346,14 +354,76 @@ export function ProblemWorkspacePage() {
 
   if (!problem) {
     return (
-      <div className="grid min-h-[60vh] place-items-center">
-        <div className="text-center">
-          <h1 className="text-xl font-bold text-palette-light">Problem not found</h1>
-          <p className="mt-2 text-sm text-palette-muted">Generate a new problem or return to the dashboard.</p>
-          <Link to="/dashboard" className="mt-4 inline-flex">
-            <Button>Go to Dashboard</Button>
+      <div className="mx-auto max-w-7xl px-4 py-8 h-[calc(100vh-2.5rem)] overflow-y-auto">
+        <div className="mb-6 flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-palette-light">Problem Library</h1>
+            <p className="mt-1 text-sm text-palette-muted">Select a problem to start coding.</p>
+          </div>
+          <Link to="/generate">
+            <Button variant="primary" icon={<Plus className="h-4 w-4" />}>
+              Generate Problem
+            </Button>
           </Link>
         </div>
+        
+        {problems.length === 0 ? (
+          <div className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-palette-border/50 py-12 text-center opacity-70 bg-palette-surface mt-8">
+            <BookOpen className="mb-3 h-8 w-8 text-palette-muted" />
+            <p className="text-sm font-medium text-palette-light">No problems available.</p>
+            <p className="mt-1 text-xs text-palette-muted">Generate a new problem to start practicing.</p>
+          </div>
+        ) : (
+          <div className="rounded-lg border border-palette-border bg-palette-surface overflow-hidden shadow-sm">
+            <table className="w-full text-left text-sm text-palette-muted">
+              <thead className="bg-palette-surfaceHover/50 border-b border-palette-border text-xs font-semibold text-palette-light uppercase tracking-wider">
+                <tr>
+                  <th className="px-6 py-4">Title</th>
+                  <th className="px-6 py-4">Difficulty</th>
+                  <th className="px-6 py-4">Topic</th>
+                  <th className="px-6 py-4">Status</th>
+                  <th className="px-6 py-4 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-palette-border/50 bg-palette-surface">
+                {problems.map((prob) => (
+                  <tr key={prob.id} className="hover:bg-palette-surfaceHover/30 transition-colors group">
+                    <td className="px-6 py-4">
+                      <Link to={`/problem/${prob.id}`} className="font-heading font-medium text-palette-light group-hover:text-accent-amber transition-colors line-clamp-1 text-base">
+                        {prob.title}
+                      </Link>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className="inline-flex items-center rounded-md bg-palette-surfaceHover/50 px-2.5 py-1 text-xs font-medium text-palette-light/90 border border-palette-border/50 shadow-sm">
+                        {prob.difficulty}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className="inline-flex items-center rounded-md bg-palette-surfaceHover/50 px-2.5 py-1 text-xs font-medium text-palette-light/90 border border-palette-border/50 shadow-sm">
+                        {prob.topic}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4">
+                      {prob.solvedAt ? <StatusBadge value="Accepted" /> : <span className="text-palette-muted/50 text-xs italic">Unsolved</span>}
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <button 
+                        onClick={(e) => {
+                          e.preventDefault();
+                          dispatch(deleteProblem(prob.id));
+                        }}
+                        className="p-2 text-palette-muted hover:text-accent-red hover:bg-accent-red/10 rounded-md transition-all inline-flex opacity-0 group-hover:opacity-100 focus:opacity-100"
+                        title="Delete Problem"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     );
   }

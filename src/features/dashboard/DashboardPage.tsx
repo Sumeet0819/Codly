@@ -1,4 +1,4 @@
-import { Activity, Flame, Gauge, Target, Timer, Trophy, Plus, History, BookOpen, Trash2 } from "lucide-react";
+import { Activity, Flame, Gauge, Target, Timer, Trophy, Plus, History } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { PageHeader } from "../../components/layout/PageHeader";
@@ -8,7 +8,7 @@ import { Panel } from "../../components/ui/Panel";
 import { ProgressBar } from "../../components/ui/ProgressBar";
 import { StatusBadge } from "../../components/ui/StatusBadge";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { fetchProblems, deleteProblem } from "../../store/problemSlice";
+import { fetchProblems } from "../../store/problemSlice";
 import { useEffect } from "react";
 import { difficulties, topics } from "../../types/topics";
 import { formatDateTime, formatDuration, getLastNDays } from "../../utils/date";
@@ -164,65 +164,6 @@ export function DashboardPage() {
                   </div>
                 </Link>
               ))}
-            </div>
-          )}
-        </Panel>
-        <Panel title="Problem Library" className="col-span-12">
-          {problems.length === 0 ? (
-            <div className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-palette-border/50 py-12 text-center opacity-70">
-              <BookOpen className="mb-3 h-8 w-8 text-palette-muted" />
-              <p className="text-sm font-medium text-palette-light">No problems available.</p>
-              <p className="mt-1 text-xs text-palette-muted">Generate a new problem to start practicing.</p>
-            </div>
-          ) : (
-            <div className="overflow-x-auto rounded-lg border border-palette-border bg-palette-surface/50 shadow-sm">
-              <table className="w-full text-left text-sm text-palette-muted">
-                <thead className="border-b border-palette-border text-xs font-semibold uppercase bg-palette-surface/80 text-palette-light tracking-wider">
-                  <tr>
-                    <th className="px-4 py-3.5">Title</th>
-                    <th className="px-4 py-3.5">Difficulty</th>
-                    <th className="px-4 py-3.5">Topic</th>
-                    <th className="px-4 py-3.5">Status</th>
-                    <th className="px-4 py-3.5 text-right">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-palette-border/50">
-                  {problems.map((prob) => (
-                    <tr key={prob.id} className="hover:bg-palette-surfaceHover/50 transition-colors group">
-                      <td className="px-4 py-3.5">
-                        <Link to={`/problem/${prob.id}`} className="font-medium text-palette-light group-hover:text-palette-teal transition-colors line-clamp-1">
-                          {prob.title}
-                        </Link>
-                      </td>
-                      <td className="px-4 py-3.5">
-                        <span className="inline-flex items-center rounded-full bg-palette-surfaceHover px-2.5 py-0.5 text-xs font-medium text-palette-light border border-palette-border/50">
-                          {prob.difficulty}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3.5">
-                        <span className="inline-flex items-center rounded-full bg-palette-surfaceHover px-2.5 py-0.5 text-xs font-medium text-palette-light border border-palette-border/50">
-                          {prob.topic}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3.5">
-                        {prob.solvedAt ? <StatusBadge value="Accepted" /> : <span className="text-palette-muted">-</span>}
-                      </td>
-                      <td className="px-4 py-3.5 text-right">
-                        <button 
-                          onClick={(e) => {
-                            e.preventDefault();
-                            dispatch(deleteProblem(prob.id));
-                          }}
-                          className="p-1.5 text-palette-muted hover:text-red-400 hover:bg-red-400/10 rounded-md transition-all inline-flex opacity-0 group-hover:opacity-100 focus:opacity-100"
-                          title="Delete Problem"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
             </div>
           )}
         </Panel>

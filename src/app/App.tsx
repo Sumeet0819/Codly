@@ -13,6 +13,7 @@ function AppRoutes() {
         <Route index element={<Navigate to="/dashboard" replace />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/generate" element={<GeneratorPage />} />
+        <Route path="/workspace" element={<ProblemWorkspacePage />} />
         <Route path="/problem/:id" element={<ProblemWorkspacePage />} />
         <Route path="/history" element={<HistoryPage />} />
         <Route path="*" element={<Navigate to="/dashboard" replace />} />

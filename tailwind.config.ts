@@ -41,8 +41,8 @@ export default {
         }
       },
       fontFamily: {
-        sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
-        heading: ["Lora", "ui-serif", "Georgia", "serif"],
+        sans: ["Helvetica Neue", "Helvetica", "Arial", "sans-serif"],
+        heading: ["Helvetica Neue", "Helvetica", "Arial", "sans-serif"],
         mono: ["JetBrains Mono", "SFMono-Regular", "Consolas", "monospace"]
       },
       boxShadow: {

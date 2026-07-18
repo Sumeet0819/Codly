@@ -45,6 +45,9 @@ async function request<T>(endpoint: string, options: RequestInit = {}): Promise<
     }
 
     // Parse the JSON response
+    if (response.status === 204) {
+      return {} as T;
+    }
     const data = await response.json();
     return data as T;
   } catch (error) {
