@@ -175,38 +175,45 @@ export function DashboardPage() {
               <p className="mt-1 text-xs text-palette-muted">Generate a new problem to start practicing.</p>
             </div>
           ) : (
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto rounded-lg border border-palette-border bg-palette-surface/50 shadow-sm">
               <table className="w-full text-left text-sm text-palette-muted">
-                <thead className="border-b border-palette-border text-xs uppercase bg-palette-surface/50">
+                <thead className="border-b border-palette-border text-xs font-semibold uppercase bg-palette-surface/80 text-palette-light tracking-wider">
                   <tr>
-                    <th className="px-4 py-3 font-medium text-palette-light">Title</th>
-                    <th className="px-4 py-3 font-medium text-palette-light">Difficulty</th>
-                    <th className="px-4 py-3 font-medium text-palette-light">Topic</th>
-                    <th className="px-4 py-3 font-medium text-palette-light">Status</th>
-                    <th className="px-4 py-3 font-medium text-palette-light text-right">Actions</th>
+                    <th className="px-4 py-3.5">Title</th>
+                    <th className="px-4 py-3.5">Difficulty</th>
+                    <th className="px-4 py-3.5">Topic</th>
+                    <th className="px-4 py-3.5">Status</th>
+                    <th className="px-4 py-3.5 text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="divide-y divide-palette-border/50">
                   {problems.map((prob) => (
-                    <tr key={prob.id} className="border-b border-palette-border/50 hover:bg-palette-surfaceHover transition">
-                      <td className="px-4 py-3">
-                        <Link to={`/problem/${prob.id}`} className="font-medium text-palette-light hover:text-palette-teal transition line-clamp-1">
+                    <tr key={prob.id} className="hover:bg-palette-surfaceHover/50 transition-colors group">
+                      <td className="px-4 py-3.5">
+                        <Link to={`/problem/${prob.id}`} className="font-medium text-palette-light group-hover:text-palette-teal transition-colors line-clamp-1">
                           {prob.title}
                         </Link>
                       </td>
-                      <td className="px-4 py-3">
-                        <span className="rounded-sm bg-palette-surface px-2 py-1 text-xs">{prob.difficulty}</span>
+                      <td className="px-4 py-3.5">
+                        <span className="inline-flex items-center rounded-full bg-palette-surfaceHover px-2.5 py-0.5 text-xs font-medium text-palette-light border border-palette-border/50">
+                          {prob.difficulty}
+                        </span>
                       </td>
-                      <td className="px-4 py-3">
-                        <span className="rounded-sm bg-palette-surface px-2 py-1 text-xs">{prob.topic}</span>
+                      <td className="px-4 py-3.5">
+                        <span className="inline-flex items-center rounded-full bg-palette-surfaceHover px-2.5 py-0.5 text-xs font-medium text-palette-light border border-palette-border/50">
+                          {prob.topic}
+                        </span>
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-4 py-3.5">
                         {prob.solvedAt ? <StatusBadge value="Accepted" /> : <span className="text-palette-muted">-</span>}
                       </td>
-                      <td className="px-4 py-3 text-right">
+                      <td className="px-4 py-3.5 text-right">
                         <button 
-                          onClick={() => dispatch(deleteProblem(prob.id))}
-                          className="p-1.5 text-palette-muted hover:text-red-400 hover:bg-red-400/10 rounded-md transition inline-flex"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            dispatch(deleteProblem(prob.id));
+                          }}
+                          className="p-1.5 text-palette-muted hover:text-red-400 hover:bg-red-400/10 rounded-md transition-all inline-flex opacity-0 group-hover:opacity-100 focus:opacity-100"
                           title="Delete Problem"
                         >
                           <Trash2 className="h-4 w-4" />
