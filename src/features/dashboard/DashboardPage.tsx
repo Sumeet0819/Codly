@@ -1,4 +1,4 @@
-import { Activity, Flame, Gauge, Target, Timer, Trophy, Plus, History } from "lucide-react";
+import { Activity, Flame, Gauge, Target, Timer, Trophy, Plus, History, BookOpen, Trash2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { PageHeader } from "../../components/layout/PageHeader";
@@ -8,7 +8,7 @@ import { Panel } from "../../components/ui/Panel";
 import { ProgressBar } from "../../components/ui/ProgressBar";
 import { StatusBadge } from "../../components/ui/StatusBadge";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { fetchProblems } from "../../store/problemSlice";
+import { fetchProblems, deleteProblem } from "../../store/problemSlice";
 import { useEffect } from "react";
 import { difficulties, topics } from "../../types/topics";
 import { formatDateTime, formatDuration, getLastNDays } from "../../utils/date";
@@ -164,6 +164,58 @@ export function DashboardPage() {
                   </div>
                 </Link>
               ))}
+            </div>
+          )}
+        </Panel>
+        <Panel title="Problem Library" className="col-span-12">
+          {problems.length === 0 ? (
+            <div className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-palette-border/50 py-12 text-center opacity-70">
+              <BookOpen className="mb-3 h-8 w-8 text-palette-muted" />
+              <p className="text-sm font-medium text-palette-light">No problems available.</p>
+              <p className="mt-1 text-xs text-palette-muted">Generate a new problem to start practicing.</p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm text-palette-muted">
+                <thead className="border-b border-palette-border text-xs uppercase bg-palette-surface/50">
+                  <tr>
+                    <th className="px-4 py-3 font-medium text-palette-light">Title</th>
+                    <th className="px-4 py-3 font-medium text-palette-light">Difficulty</th>
+                    <th className="px-4 py-3 font-medium text-palette-light">Topic</th>
+                    <th className="px-4 py-3 font-medium text-palette-light">Status</th>
+                    <th className="px-4 py-3 font-medium text-palette-light text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {problems.map((prob) => (
+                    <tr key={prob.id} className="border-b border-palette-border/50 hover:bg-palette-surfaceHover transition">
+                      <td className="px-4 py-3">
+                        <Link to={`/problem/${prob.id}`} className="font-medium text-palette-light hover:text-palette-teal transition line-clamp-1">
+                          {prob.title}
+                        </Link>
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className="rounded-sm bg-palette-surface px-2 py-1 text-xs">{prob.difficulty}</span>
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className="rounded-sm bg-palette-surface px-2 py-1 text-xs">{prob.topic}</span>
+                      </td>
+                      <td className="px-4 py-3">
+                        {prob.solvedAt ? <StatusBadge value="Accepted" /> : <span className="text-palette-muted">-</span>}
+                      </td>
+                      <td className="px-4 py-3 text-right">
+                        <button 
+                          onClick={() => dispatch(deleteProblem(prob.id))}
+                          className="p-1.5 text-palette-muted hover:text-red-400 hover:bg-red-400/10 rounded-md transition inline-flex"
+                          title="Delete Problem"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           )}
         </Panel>

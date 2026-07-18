@@ -29,3 +29,13 @@ export const createProblem = async (req: Request, res: Response): Promise<void> 
     res.status(500).json({ error: err.message });
   }
 };
+
+export const deleteProblem = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const problem = await Problem.findByIdAndDelete(req.params.id);
+    if (!problem) { res.status(404).json({ error: 'Not found' }); return; }
+    res.status(204).send();
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
+};

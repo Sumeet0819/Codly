@@ -2,7 +2,7 @@ import Editor from "@monaco-editor/react";
 import { BookOpen, Check, Lightbulb, Loader2, Play, Plus, Send, Trash2 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import ReactMarkdown from "react-markdown";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import { Button } from "../../components/ui/Button";
 import { Field, inputClassName } from "../../components/ui/Field";
@@ -322,12 +322,15 @@ function TerminalPanel({
 
 export function ProblemWorkspacePage() {
   const { id } = useParams();
+  const location = useLocation();
   const dispatch = useAppDispatch();
   const problem = useAppSelector((state) => state.problems.problems.find((item) => item.id === id));
   const settings = useAppSelector((state) => state.settings);
   const workspace = useAppSelector((state) => state.workspace);
   const lastRun = useAppSelector((state) => (id ? state.submissions.lastRunByProblem[id] : undefined));
-  const [language, setLanguage] = useState<SupportedLanguage>(settings.defaultLanguage);
+  const [language, setLanguage] = useState<SupportedLanguage>(
+    (location.state as any)?.language ?? settings.defaultLanguage
+  );
   const [running, setRunning] = useState(false);
   const [hintLoading, setHintLoading] = useState(false);
   const [mobileTab, setMobileTab] = useState<MobileTab>("editor");

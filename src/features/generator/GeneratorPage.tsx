@@ -29,7 +29,7 @@ export function GeneratorPage() {
     try {
       const problem = await generateProblemWithGroq({ difficulty, topic, language, customPrompt });
       const savedProblem = await dispatch(persistProblem(problem)).unwrap();
-      navigate(`/problem/${savedProblem.id}`);
+      navigate(`/problem/${savedProblem.id}`, { state: { language } });
     } catch (error) {
       dispatch(setGenerationStatus({ status: "failed", error: error instanceof Error ? error.message : "Problem generation failed" }));
     }

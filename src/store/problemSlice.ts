@@ -38,6 +38,11 @@ export const persistProblem = createAsyncThunk("problems/persistProblem", async 
   return mapProblemId(data);
 });
 
+export const deleteProblem = createAsyncThunk("problems/deleteProblem", async (id: string) => {
+  await commonApiService.delete(`/problems/${id}`);
+  return id;
+});
+
 const problemSlice = createSlice({
   name: "problems",
   initialState,
@@ -88,6 +93,9 @@ const problemSlice = createSlice({
       .addCase(persistProblem.rejected, (state, action) => {
         state.generationStatus = "failed";
         state.generationError = action.error.message;
+      })
+      .addCase(deleteProblem.fulfilled, (state, action) => {
+        state.problems = state.problems.filter((p) => p.id !== action.payload);
       });
   },
 });
