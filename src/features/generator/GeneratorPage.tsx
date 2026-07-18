@@ -101,8 +101,7 @@ export function GeneratorPage() {
             <div className="grid gap-2 rounded-md border border-palette-border bg-palette-surfaceHover p-4 font-mono text-xs text-palette-muted shadow-sm">
               <span>GROQ API: {import.meta.env.VITE_GROQ_API_KEY ? "configured" : "fallback mode"}</span>
               <span>Persistence: localStorage</span>
-              <span>Execution: Judge0 CE</span>
-              <span>Frontend only: no custom backend</span>
+              <span>Execution: Backend API</span>
             </div>
           </div>
         </Panel>
